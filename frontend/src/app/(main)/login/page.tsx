@@ -13,7 +13,6 @@ export default function Login() {
             Read More
           </button>
         </div>
-        {/* <div className="border w-96 h-96 rounded-full flex justi"></div> */}
       </div>
       <div className="flex-1 flex justify-center items-center">
         <div className="flex flex-col gap-10">
