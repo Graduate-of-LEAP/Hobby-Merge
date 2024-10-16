@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { connectToDatabase } from "./database/connect";
+import { authRouter } from "./routes";
+import { authMiddleware } from "./middleware/auth.middleware";
 
 dotenv.config();
 
@@ -12,6 +14,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(authMiddleware);
+
+app.use("/auth", authRouter);
 
 app.get("/", (_req, res) => {
   res.json({ message: "hello" });
