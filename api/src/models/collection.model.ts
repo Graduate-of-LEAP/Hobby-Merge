@@ -32,12 +32,6 @@ const collectionSchema = new mongoose.Schema(
         ref: "CollectionMessage",
       },
     ],
-    categories: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
   },
   { timestamps: true }
 );
