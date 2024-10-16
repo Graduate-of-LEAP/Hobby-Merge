@@ -26,9 +26,9 @@ const userSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    collaction: {
+    collection: {
       type: Schema.Types.ObjectId,
-      ref: "Collaction",
+      ref: "Collection",
       required: true,
     },
     reaction: {
