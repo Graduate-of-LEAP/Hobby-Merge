@@ -17,24 +17,24 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      required: true,
+      required: false,
       enum: ["ADMIN", "USER"],
       default: "USER",
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required: false,
     },
     collection: {
       type: Schema.Types.ObjectId,
       ref: "Collection",
-      required: true,
+      required: false,
     },
     reaction: {
       type: Schema.Types.ObjectId,
       ref: "Reaction",
-      required: true,
+      required: false,
     },
     lastLogin: {
       type: Date,
@@ -45,6 +45,6 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: false }
 );
 export const User = model("User", userSchema);
