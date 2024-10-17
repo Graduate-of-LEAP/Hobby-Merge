@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { User } from "./user.model";
 import { Reaction } from "./reaction.model";
  
 const postSchema = new mongoose.Schema(
   {
     user:{
-        type:User
+        ref:"User",
     },
     content: {
       type: String,
@@ -20,11 +20,13 @@ const postSchema = new mongoose.Schema(
         default: 0,
       },
       reaction:{
-        type: [Reaction],
+        ref:"Reaction",
+        type: Schema.Types.ObjectId,
         required: true,
       },
       comments: {
-        type: [Comment],
+        ref:"Comment",
+        type:Schema.Types.ObjectId,
         required: true,
         
       }
