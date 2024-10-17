@@ -12,6 +12,7 @@ import {
 
 import { authMiddleware } from "./middleware/auth.middleware";
 import { collectionMessageRouter } from "./routes/collection.message.route";
+import categoryRouter from "./routes/category.route";
 
 dotenv.config();
 
