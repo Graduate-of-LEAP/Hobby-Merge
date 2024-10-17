@@ -3,6 +3,7 @@ import { User } from "../../models/user.model";
 
 export const Register: RequestHandler = async (req, res): Promise<void> => {
   const { id, name, email, password } = req.body;
+
   if (!name || !email || !password) {
     res.status(400).json({ message: "Missing required fields" });
     return;
@@ -30,11 +31,13 @@ export const Register: RequestHandler = async (req, res): Promise<void> => {
         email: newUser.email,
       },
     });
+    return;
   } catch (error) {
     console.error("Registration error:", error);
 
     res.status(500).json({
       message: "Internal Server Error",
     });
+    return;
   }
 };

@@ -29,7 +29,6 @@ export const Login: RequestHandler = async (req, res): Promise<void> => {
         id: user.id,
       },
     });
-    res.send("Login successful");
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({
