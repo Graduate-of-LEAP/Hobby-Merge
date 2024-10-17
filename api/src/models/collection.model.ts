@@ -17,19 +17,21 @@ const collectionSchema = new mongoose.Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        required: false,
       },
     ],
     posts: [
       {
         type: Schema.Types.ObjectId,
         ref: "Post",
+        required: false,
       },
     ],
     messages: [
       {
         type: Schema.Types.ObjectId,
         ref: "CollectionMessage",
+        required: false,
       },
     ],
   },
