@@ -3,9 +3,13 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { connectToDatabase } from "./database/connect";
-import { authRouter, collectionRouter } from "./routes";
+import {
+  authRouter,
+  collectionRouter,
+  userMessageRouter,
+  userRouter,
+} from "./routes";
 import { authMiddleware } from "./middleware/auth.middleware";
-import { userRouter } from "./routes/user.route";
 
 dotenv.config();
 
@@ -23,6 +27,10 @@ app.use(authMiddleware);
 app.use("/auth", authRouter);
 app.use("/collection", collectionRouter);
 app.use("/user", userRouter);
+app.use("/user/message", userMessageRouter);
+app.get("/protected", (req, res) => {
+  res.send(`Hello, User ID: ${req.userID}`);
+});
 
 app.get("/", (_req, res) => {
   res.json({ message: "hello" });

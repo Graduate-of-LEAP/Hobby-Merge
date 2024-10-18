@@ -1,13 +1,10 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { User } from "../../models/user.model";
 
-interface CustomRequest extends Request {
-  userID?: string;
-}
-
-export const GetMe = async (req: CustomRequest, res: Response) => {
+export const GetMe: RequestHandler = async (req, res) => {
   try {
-    const user = await User.findById(req.userID).select("-password");
+    const { userID } = req.query;
+    const user = await User.findById(userID).select("-password");
 
     if (!user) {
       res.status(404).json({ message: "user not found" });
