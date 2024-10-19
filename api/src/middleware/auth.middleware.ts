@@ -1,13 +1,9 @@
-import { NextFunction, Response, Request } from "express";
+import { NextFunction, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
-interface CustomRequest extends Request {
-  user?: object;
-}
-
-export const authMiddleware = (
-  req: CustomRequest,
-  res: Response,
+export const authMiddleware: RequestHandler = (
+  req,
+  res,
   next: NextFunction
 ) => {
   if (req.path.startsWith("/auth")) {
@@ -31,8 +27,11 @@ export const authMiddleware = (
       token as string,
       process.env.JWT_SECRET
     ) as jwt.JwtPayload;
-
-    req.user = user;
+    if (!user) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+    // req.userID = user.id;
     next();
   } catch (err) {
     console.error("Authentication error:", err);

@@ -14,13 +14,7 @@ export const Login: RequestHandler = async (req, res): Promise<void> => {
       return;
     }
 
-    const token = jwt.sign(
-      {
-        email: user.email,
-        id: user.id,
-      },
-      process.env.JWT_SECRET as string
-    );
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
 
     res.json({
       token,
