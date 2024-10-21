@@ -8,13 +8,14 @@ const categorySchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
 
     collections: [
       {
         type: Schema.Types.ObjectId,
         ref: "Collection",
+        required: false,
       },
     ],
   },
