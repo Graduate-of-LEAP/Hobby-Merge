@@ -9,13 +9,9 @@ import {
   userMessageRouter,
   userRouter,
 } from "./routes";
-import {
-  authRouter,
-  collectionRouter,
-  userMessageRouter,
-  userRouter,
-} from "./routes";
+
 import { authMiddleware } from "./middleware/auth.middleware";
+import { collectionMessageRouter } from "./routes/collection.message.route";
 
 dotenv.config();
 
@@ -32,6 +28,7 @@ app.use(authMiddleware);
 
 app.use("/auth", authRouter);
 app.use("/collection", collectionRouter);
+app.use("collectionMessage", collectionMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.get("/protected", (req, res) => {
