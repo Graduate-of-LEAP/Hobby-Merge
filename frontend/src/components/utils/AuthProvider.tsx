@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 type User = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -24,15 +24,15 @@ type User = {
   isVerified: boolean;
 };
 
-type Category = {
-  id: string;
+export type Category = {
+  _id: string;
   name: string;
   image: string;
   collection: Collection[];
 };
 
 type Collection = {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   cover_image: string;
@@ -41,11 +41,11 @@ type Collection = {
   messages: CollectionMessage[];
 };
 type Reaction = {
-  id: string;
+  _id: string;
   reaction: string;
 };
 type Post = {
-  id: string;
+  _id: string;
   user: User;
   content: string;
   postImages: [string];
@@ -54,14 +54,14 @@ type Post = {
   comments: Comment;
 };
 type CollectionMessage = {
-  id: string;
+  _id: string;
   message: string;
   collection: Collection;
   user: User;
   posts: Post[];
 };
 type Comment = {
-  id: string;
+  _id: string;
   content: string;
   post: Post;
   user: User;
