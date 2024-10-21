@@ -10,13 +10,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Category = () => {
-  const { user, setUser, getUser } = (useUser() as UserContextType) || {};
+  const { user, getUser } = (useUser() as UserContextType) || {};
 
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const getCategories = async () => {
     try {
-      const response = await api.get(`/category/`, {
+      const response = await api.get(`/category`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -27,14 +28,23 @@ const Category = () => {
     }
   };
 
-  const CategoriesSaveToUser = async () => {
+  const toggleCategorySelection = (categoryId: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((id) => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const saveSelectedCategories = async () => {
     if (user) {
+      console.log("User ID:", user._id);
       try {
         const response = await api.post(
-          "/users",
+          "/user",
           {
-            userId: user.id,
-            productId: id,
+            userId: user._id,
+            categoryIds: selectedCategories,
           },
           {
             headers: {
@@ -43,6 +53,7 @@ const Category = () => {
           }
         );
         console.log(response.data);
+
         getUser();
       } catch (error) {
         console.log(error);
@@ -54,7 +65,13 @@ const Category = () => {
 
   useEffect(() => {
     getCategories();
+    getUser();
   }, []);
+
+  useEffect(() => {
+    console.log("User data:", user);
+  }, [user]);
+
   return (
     <div className="max-w-screen-xl m-auto h-screen border px-32">
       <div className="flex flex-col mt-[60px]">
@@ -73,14 +90,22 @@ const Category = () => {
               key={index}
               role="button"
               aria-label={`Category: ${category?.name}`}
-              className="border border-[#dddddd] text-[#6f7079] px-2 py-1 rounded-full flex items-center justify-center "
+              onClick={() => toggleCategorySelection(category._id)}
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
+                selectedCategories.includes(category._id)
+                  ? "border-[#06B6D4]"
+                  : "border-[#dddddd] text-[#6f7079]"
+              }`}
             >
               {category?.name}
             </div>
           ))}
         </div>
         <div className="mt-16">
-          <button className="text-white bg-[942AE7] rounded-full w-64 p-2">
+          <button
+            onClick={saveSelectedCategories}
+            className="text-white bg-[942AE7] rounded-full w-64 p-2"
+          >
             Үргэлжлүүлэх
           </button>
         </div>

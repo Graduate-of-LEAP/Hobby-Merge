@@ -2,37 +2,59 @@ import { Request, Response } from "express";
 import { User } from "../../models/user.model";
 
 interface CustomRequest extends Request {
-  user?: { id: string };
+  user?: { id: string }; // This may come from middleware
 }
 
-export const SavedByCategoryId = async (req: CustomRequest, res: Response) => {
-  console.log(req.user);
-  const { userId, categoryId } = req.body;
+export const SavedByCategoryId = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { userId, categoryIds } = req.body;
+
+  if (!userId || !Array.isArray(categoryIds)) {
+    res.status(400).json({ message: "userId and categoryIds are required" });
+    return;
+  }
+
   try {
     const user = await User.findById(userId);
 
-    if (!user)
-      return res.status(404).json({ message: "hereglegch baihgui baina" });
-
-    const alreadyChoosen = user.category?.includes(categoryId);
-
-    if (alreadyChoosen) {
-      user.alreadyChoosen = user.alreadyChoosen?.filter(
-        (id) => id.toString() !== categoryId
-      );
-    } else {
-      user.alreadyChoosen?.push(categoryId);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
     }
+
+    if (!user.category) {
+      user.category = [];
+    }
+
+    const existingCategories = new Set(
+      user.category.map((id) => id.toString())
+    );
+
+    categoryIds.forEach((categoryId) => {
+      if (existingCategories.has(categoryId)) {
+        user.category = user.category.filter(
+          (id) => id.toString() !== categoryId
+        );
+      } else {
+        user.category.push(categoryId);
+      }
+    });
 
     await user.save();
 
-    return res.status(200).json({
-      message: alreadyChoosen ? "Category removed" : "Category added",
-      savedProduct: user.alreadyChoosen,
+    res.status(200).json({
+      message: "Categories updated",
+      savedCategories: user.category,
     });
+    return;
   } catch (error) {
-    return res.status(500).json({
-      message: "Interval server error",
+    console.error("Error in SavedByCategoryId:", error);
+    res.status(500).json({
+      message: "Internal server error",
+      error,
     });
+    return;
   }
 };

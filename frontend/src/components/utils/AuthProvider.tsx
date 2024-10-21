@@ -104,7 +104,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       setUser({ ...registeredUser });
 
       const redirectPath =
-        registeredUser.role === "ADMIN" ? "/admin" : "/category";
+        registeredUser.role === "ADMIN" ? "/admin" : "/login";
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
@@ -123,7 +123,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
       setUser({ ...loggedInUser, isAuthenticated: true });
 
-      const redirectPath = loggedInUser.role === "ADMIN" ? "/admin" : "/";
+      const redirectPath =
+        loggedInUser.role === "ADMIN" ? "/admin" : "/category";
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
