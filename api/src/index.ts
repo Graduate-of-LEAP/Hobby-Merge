@@ -32,6 +32,7 @@ app.use("/collection", collectionRouter);
 app.use("collectionMessage", collectionMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
+app.use("/category", categoryRouter);
 
 app.get("/", (_req, res) => {
   res.json({ message: "hello" });
