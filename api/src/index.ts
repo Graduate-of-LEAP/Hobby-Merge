@@ -35,7 +35,7 @@ app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
 
 app.get("/", (_req, res) => {
-  res.json({ message: "hello" });
+  res.json({ message: "Та нэвтрэнэ үү!" });
 });
 
 app.listen(PORT, () => {
