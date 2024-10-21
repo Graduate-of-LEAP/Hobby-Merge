@@ -32,9 +32,6 @@ app.use("/collection", collectionRouter);
 app.use("collectionMessage", collectionMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
-app.get("/protected", (req, res) => {
-  res.send(`Hello, User ID: ${req.userID}`);
-});
 
 app.get("/", (_req, res) => {
   res.json({ message: "hello" });
