@@ -7,6 +7,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { useState } from "react";
 import { UserContextType, useUser } from "@/components/utils/AuthProvider";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Register = () => {
   const { register } = (useUser() as UserContextType) || {};
@@ -85,6 +86,11 @@ const Register = () => {
             >
               Register
             </button>
+            <Link href={`/login`}>
+              <button className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4">
+                Sign in
+              </button>
+            </Link>
           </div>
         </div>
       </div>

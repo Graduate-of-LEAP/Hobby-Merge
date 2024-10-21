@@ -1,9 +1,15 @@
 "use client";
+import { UserContextType, useUser } from "@/components/utils/AuthProvider";
+import Link from "next/link";
 import React, { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuLock } from "react-icons/lu";
 
 export default function Login() {
+  const { login } = (useUser() as UserContextType) || {};
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [isIconVisible, setIsIconVisible] = useState(true);
   const [iconVisible, setIconVisible] = useState(true);
 
@@ -59,6 +65,8 @@ export default function Login() {
                 type="email"
                 placeholder="email"
                 className="outline-none duration-700"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div
@@ -71,14 +79,26 @@ export default function Login() {
                 type="password"
                 placeholder="Password"
                 className="outline-none duration-1000"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button className="border border-[#15444d] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#15444d] text-lg duration-700 hover:border-none">
+            <button
+              className="border border-[#15444d] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#15444d] text-lg duration-700 hover:border-none"
+              onClick={() => login(email, password)}
+            >
               Login
             </button>
-            <button className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4">
-              Forget Password
-            </button>
+            <div className="flex justify-evenly">
+              <button className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4">
+                Forget Password
+              </button>
+              <Link href={`/register`}>
+                <button className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4">
+                  Sign up
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

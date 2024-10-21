@@ -98,11 +98,13 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const register = async (newUser: NewUser) => {
     try {
       const response = await api.post("/auth/register", newUser);
+      console.log("Registration response:", response);
       const { token, user: registeredUser } = response.data;
 
       setUser({ ...registeredUser });
 
-      const redirectPath = registeredUser.role === "ADMIN" ? "/admin" : "/";
+      const redirectPath =
+        registeredUser.role === "ADMIN" ? "/admin" : "/login";
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
@@ -117,6 +119,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
     try {
       const response = await api.post("/auth/login", { email, password });
       const { token, user: loggedInUser } = response.data;
+      console.log(response.data);
 
       setUser({ ...loggedInUser, isAuthenticated: true });
 
@@ -134,7 +137,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error("No token found");
+        console.warn("No token found, skipping user fetch.");
+        return;
       }
 
       const response = await api.get("/user/", {
@@ -145,7 +149,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       setUser(response.data);
     } catch (error) {
       console.error("Failed to fetch user data", error);
-      toast.error("Failed to fetch user data.");
     }
   };
 
