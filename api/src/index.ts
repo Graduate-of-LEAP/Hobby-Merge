@@ -32,7 +32,7 @@ app.use("/user/message", userMessageRouter);
 app.use("/reaction", reactionRoute);
 
 app.get("/", (_req, res) => {
-  res.json({ message: "hello" });
+  res.json({ message: "Та нэвтрэнэ үү!" });
 });
 
 app.listen(PORT, () => {

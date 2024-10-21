@@ -1,9 +1,13 @@
-import { NextFunction, RequestHandler } from "express";
+import { NextFunction, Response, Request } from "express";
 import jwt from "jsonwebtoken";
 
-export const authMiddleware: RequestHandler = (
-  req,
-  res,
+interface CustomRequest extends Request {
+  userID?: string;
+}
+
+export const authMiddleware = (
+  req: CustomRequest,
+  res: Response,
   next: NextFunction
 ) => {
   if (req.path.startsWith("/auth")) {
@@ -31,7 +35,7 @@ export const authMiddleware: RequestHandler = (
       res.status(401).json({ error: "Unauthorized" });
       return;
     }
-    // req.userID = user.id;
+    req.userID = user.id;
     next();
   } catch (err) {
     console.error("Authentication error:", err);

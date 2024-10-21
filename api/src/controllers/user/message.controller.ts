@@ -1,5 +1,10 @@
 import { RequestHandler, Request, Response } from "express";
 import { UserMessage } from "../../models/userMessage.model";
+import { User } from "../../models/user.model";
+
+interface CustomRequest extends Request {
+  userID?: string;
+}
 
 export const getAllUserMessage: RequestHandler = async (_req, res) => {
   try {
@@ -12,6 +17,10 @@ export const getAllUserMessage: RequestHandler = async (_req, res) => {
 export const getUserMessageUserID: RequestHandler = async (req, res) => {
   try {
     const { user } = req.params;
+    const message = await UserMessage.find({
+      $or: [{ from: user }, { to: user }],
+    });
+    res.status(200).json(message);
   } catch (error) {
     console.error("Get user message error:", error);
     res.status(500).json({
@@ -22,6 +31,8 @@ export const getUserMessageUserID: RequestHandler = async (req, res) => {
 export const getUserMessageID: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
+    const message = await UserMessage.findById(id);
+    res.status(200).json(message);
   } catch (error) {
     console.error("Get user message error:", error);
     res.status(500).json({
@@ -29,12 +40,12 @@ export const getUserMessageID: RequestHandler = async (req, res) => {
     });
   }
 };
-export const createUserMessage: RequestHandler = async (req, res) => {
+export const createUserMessage = async (req: CustomRequest, res: Response) => {
   try {
     const { to, message } = req.body;
-
     const newCollection = await UserMessage.create({
       to,
+      from: req.userID,
       message,
     });
 
