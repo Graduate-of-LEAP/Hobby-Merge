@@ -8,6 +8,7 @@ import {
 } from "@/components/utils/AuthProvider";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Category = () => {
   const { user, getUser } = (useUser() as UserContextType) || {};
@@ -23,9 +24,7 @@ const Category = () => {
         },
       });
       setCategories(response.data.categories);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const toggleCategorySelection = (categoryId: string) => {
@@ -38,12 +37,12 @@ const Category = () => {
 
   const saveSelectedCategories = async () => {
     if (user) {
-      console.log("User ID:", user._id);
+      console.log("User ID:", user.id);
       try {
         const response = await api.post(
           "/user",
           {
-            userId: user._id,
+            userId: user.id,
             categoryIds: selectedCategories,
           },
           {
@@ -53,10 +52,11 @@ const Category = () => {
           }
         );
         console.log(response.data);
-
         getUser();
+        toast.success("Таны сонирхолуудыг амжилттай хадгаллаа");
       } catch (error) {
-        console.log(error);
+        console.error("Error saving selected categories:", error);
+        toast.error("Сонирхол хадгалахад алдаа гарлаа.");
       }
     } else {
       console.log("User not logged in");
@@ -67,10 +67,6 @@ const Category = () => {
     getCategories();
     getUser();
   }, []);
-
-  useEffect(() => {
-    console.log("User data:", user);
-  }, [user]);
 
   return (
     <div className="max-w-screen-xl m-auto h-screen border px-32">
@@ -89,7 +85,6 @@ const Category = () => {
             <div
               key={index}
               role="button"
-              aria-label={`Category: ${category?.name}`}
               onClick={() => toggleCategorySelection(category._id)}
               className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
                 selectedCategories.includes(category._id)

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../../models/user.model";
 
 interface CustomRequest extends Request {
-  user?: { id: string }; // This may come from middleware
+  user?: { id: string };
 }
 
 export const SavedByCategoryId = async (
