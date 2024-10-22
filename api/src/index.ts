@@ -10,7 +10,10 @@ import {
   userMessageRouter,
   userRouter,
 } from "./routes";
+
 import { authMiddleware } from "./middleware/auth.middleware";
+import { collectionMessageRouter } from "./routes/collection.message.route";
+import categoryRouter from "./routes/category.route";
 import { reactionRoute } from "./routes/reaction.route";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
@@ -40,9 +43,10 @@ io.use(socketAuthMiddleware);
 
 app.use("/auth", authRouter);
 app.use("/collection", collectionRouter);
+app.use("collectionMessage", collectionMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
-app.use("/reaction", reactionRoute);
+app.use("/category", categoryRouter);
 
 app.get("/", (_req, res) => {
   res.json({ message: "Та нэвтрэнэ үү!" });

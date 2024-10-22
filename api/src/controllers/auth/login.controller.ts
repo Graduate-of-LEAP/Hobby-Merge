@@ -21,6 +21,7 @@ export const Login: RequestHandler = async (req, res): Promise<void> => {
       user: {
         email: user.email,
         id: user.id,
+        role: user.role,
       },
     });
   } catch (error) {
