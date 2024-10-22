@@ -32,8 +32,8 @@ const Register = () => {
       <div className="flex-1 h-screen bg-white flex justify-center items-center z-10">
         <div className="flex flex-col gap-10">
           <div>
-            <h1 className="text-xl font-bold text-[#0e343c]">HELLO!</h1>
-            <h1 className="font-medium text-[#15444d]">
+            <h1 className="text-4xl font-bold text-[#226d78]">HELLO!</h1>
+            <h1 className="font-medium text-lg text-[#226d78]">
               Sign Up to Get Started
             </h1>
           </div>
@@ -43,10 +43,12 @@ const Register = () => {
               onMouseEnter={() => setIsHovering(false)}
               onMouseLeave={() => setIsHovering(true)}
             >
-              {isHovering && <FaUser className="opacity-60 h-4 w-4" />}
+              {isHovering && (
+                <FaUser className="opacity-60 h-4 w-4 text-[#226d78]" />
+              )}
               <input
                 type="text"
-                className="outline-none"
+                className="outline-none placeholder:text-[#226d78] opacity-60"
                 placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -58,11 +60,11 @@ const Register = () => {
               onMouseLeave={() => setIsHoveringEmail(true)}
             >
               {isHoveringEmail && (
-                <MdOutlineEmail className="opacity-60 h-6 w-6" />
+                <MdOutlineEmail className="opacity-60 h-5 w-5 text-[#226d78]" />
               )}
               <input
                 type="text"
-                className="outline-none"
+                className="outline-none placeholder:text-[#226d78] opacity-60"
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -73,17 +75,19 @@ const Register = () => {
               onMouseEnter={() => setIsHoveringPassword(false)}
               onMouseLeave={() => setIsHoveringPassword(true)}
             >
-              {isHoveringPassword && <FaLock className="opacity-60 h-4 w-4" />}
+              {isHoveringPassword && (
+                <FaLock className="opacity-60 h-4 w-4 text-[#226d78]" />
+              )}
               <input
                 type="password"
-                className="outline-none"
+                className="outline-none placeholder:text-[#226d78] opacity-60"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <button
-              className="duration-700 border border-[#15444d] py-2 rounded-3xl hover:bg-[#226d7b] hover:text-white text-[#226d7b]"
+              className="duration-700 border-2 border-[#226d78] hover:border-none py-2 rounded-3xl hover:bg-[#226d7b] hover:text-white text-[#226d78] text-lg font-semibold"
               onClick={() => {
                 if (!name || !email || !password) {
                   toast.error("Бүх талбарыг бөглөнө үү.");
@@ -95,10 +99,10 @@ const Register = () => {
               Register
             </button>
             <button
-              className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4 z-10"
+              className="flex justify-center hover:text-[#15444d] text-[#226D7B] text-lg hover:underline underline-offset-4 z-10"
               onClick={() => setMove(false)} // Moves the section left
             >
-              Sign in
+              Login
             </button>
           </div>
         </div>
@@ -106,10 +110,8 @@ const Register = () => {
       <div className="flex-1 flex justify-center items-center z-10">
         <div className="flex flex-col gap-10">
           <div className="">
-            <h1 className="text-3xl font-semibold text-[#0e343c]">
-              Hello Again!
-            </h1>
-            <p className="text-lg font-medium text-[#15444d]">Welcome Back</p>
+            <h1 className="text-4xl font-bold text-[#226d78]">Hello Again!</h1>
+            <p className="text-lg font-medium text-[#226d78]">Welcome Back</p>
           </div>
           <div className="w-80 flex flex-col gap-5 ">
             <div
@@ -118,12 +120,12 @@ const Register = () => {
               onMouseLeave={onMouseLeaveIcon}
             >
               {isIconVisible && (
-                <HiOutlineMail className="opacity-60 w-5 h-5" />
+                <HiOutlineMail className="opacity-60 w-5 h-5 text-[#226d78]" />
               )}
               <input
                 type="email"
                 placeholder="Email"
-                className="outline-none duration-700"
+                className="outline-none duration-700 placeholder:text-[#226d78] opacity-60"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -133,11 +135,13 @@ const Register = () => {
               onMouseEnter={onMouseEnterLock}
               onMouseLeave={onMouseLeaveLock}
             >
-              {iconVisible && <LuLock className="opacity-60 w-5 h-5 " />}
+              {iconVisible && (
+                <LuLock className="opacity-60 w-5 h-5 text-[#226d78]" />
+              )}
               <input
                 type="password"
                 placeholder="Password"
-                className="outline-none duration-1000"
+                className="outline-none duration-1000 placeholder:text-[#226d78] opacity-60"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -145,18 +149,18 @@ const Register = () => {
 
             {/* Login Button */}
             <button
-              className="border border-[#15444d] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#15444d] text-lg duration-700 hover:border-none"
+              className="border-2 border-[#226d78] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#226d78] text-lg font-semibold duration-700 hover:border-none"
               onClick={() => login(email, password)}
             >
               Login
             </button>
 
-            <div className="flex justify-evenly">
-              <button className="hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4">
+            <div className="flex flex-col justify-evenly">
+              <button className="hover:text-[#15444d] text-[#226d78] text-lg hover:underline underline-offset-4">
                 Forget Password
               </button>
               <button
-                className="hover:text-[#15444d] text-[#226D7B] text-lg underline underline-offset-4 z-10"
+                className="hover:text-[#15444d] text-[#226D7B] text-lg hover:underline underline-offset-4 z-10"
                 onClick={() => setMove(true)} // Moves the section right
               >
                 Sign up
@@ -171,12 +175,16 @@ const Register = () => {
             move ? "translate-x-full" : "translate-x-0"
           } duration-1000`} // Transition for smooth sliding
         >
-          <div className="w-[410px] h-[147px] text-white">
-            <h1 className="text-4xl font-bold">Hobby Merge</h1>
-            <h1 className="text-xl">
-              The most popular peer to peer lending at SEA
-            </h1>
-            <h1>Read More</h1>
+          <div className="w-[410px] h-[147px] text-white flex flex-col gap-4">
+            <div>
+              <h1 className="text-5xl font-bold">Hobby Merge</h1>
+              <h1 className="text-xl">
+                The most popular peer to peer lending at SEA
+              </h1>
+            </div>
+            <button className="flex justify-start hover:underline underline-offset-4 ">
+              Read More
+            </button>
           </div>
         </div>
       </div>
