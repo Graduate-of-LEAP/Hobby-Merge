@@ -1,15 +1,19 @@
-import { NextFunction, RequestHandler, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import { NextFunction, Response, Request } from "express";
+import { verifyToken } from "./verify.token";
 
 interface CustomRequest extends Request {
-  user?: { id: string };
+  userID?: string;
 }
-export const authMiddleware: RequestHandler = (
+
+export const authMiddleware = (
   req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
   if (req.path.startsWith("/auth")) {
+    return next();
+  }
+  if (req.path.startsWith("/socket.io")) {
     return next();
   }
 
@@ -22,19 +26,8 @@ export const authMiddleware: RequestHandler = (
   }
 
   try {
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET is not defined");
-    }
-
-    const user = jwt.verify(
-      token as string,
-      process.env.JWT_SECRET
-    ) as jwt.JwtPayload;
-    if (!user) {
-      res.status(401).json({ error: "Unauthorized" });
-      return;
-    }
-    req.user = { id: user.id };
+    const decodedUser = verifyToken(token);
+    req.userID = decodedUser.id;
     next();
   } catch (err) {
     console.error("Authentication error:", err);
