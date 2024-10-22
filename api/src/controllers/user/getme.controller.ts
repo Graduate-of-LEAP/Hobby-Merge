@@ -5,7 +5,7 @@ interface CustomRequest extends Request {
   userID?: string;
 }
 
-export const GetMe = async (req: CustomRequest, res: Response) => {
+export const getMe = async (req: CustomRequest, res: Response) => {
   try {
     const user = await User.findById(req.userID).select("-password");
 

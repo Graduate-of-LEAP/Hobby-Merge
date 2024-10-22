@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getMe } from "../controllers/user/getme.controller";
 import { SavedByCategoryId } from "../controllers/user/saved-by-categoryId.controller";
+import { getMe } from "../controllers/user/getme.controller";
 
 const userRouter = Router();
 
