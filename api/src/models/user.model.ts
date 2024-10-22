@@ -21,11 +21,13 @@ const userSchema = new mongoose.Schema(
       enum: ["ADMIN", "USER"],
       default: "USER",
     },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-      required: false,
-    },
+    category: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Category",
+        required: false,
+      },
+    ],
     collection: {
       type: Schema.Types.ObjectId,
       ref: "Collection",

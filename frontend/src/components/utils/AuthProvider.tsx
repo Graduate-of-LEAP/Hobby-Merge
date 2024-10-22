@@ -11,9 +11,10 @@ import {
 import { api } from "../lib/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 type User = {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   role: string;
@@ -123,7 +124,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
       setUser({ ...loggedInUser, isAuthenticated: true });
 
-      const redirectPath = loggedInUser.role === "ADMIN" ? "/admin" : "/";
+      const redirectPath =
+        loggedInUser.role === "ADMIN" ? "/admin" : "/category";
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
@@ -132,7 +134,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       console.error("Нэвтрэх алдаа:", error);
     }
   };
-
   const getUser = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -141,14 +142,20 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         return;
       }
 
-      const response = await api.get("/user/", {
+      console.log("Fetching user with token:", token);
+      const response = await api.get("/user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
       setUser(response.data);
     } catch (error) {
-      console.error("Failed to fetch user data", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data);
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
 
@@ -162,7 +169,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       toast.error("Log out failed.");
     }
   };
-
   useEffect(() => {
     getUser();
   }, []);
