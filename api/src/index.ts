@@ -18,6 +18,7 @@ import { reactionRoute } from "./routes/reaction.route";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
 import { chatSocket } from "./sockets/chat";
+import { connectSocket } from "./sockets/connect.socket";
 
 dotenv.config();
 
@@ -48,16 +49,11 @@ app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
 
+connectSocket(io);
 app.get("/", (_req, res) => {
   res.json({ message: "Та нэвтрэнэ үү!" });
 });
-io.on("connection", (socket) => {
-  console.log("a user connected");
-  chatSocket(socket);
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+
 server.listen(3005, () => {
   console.log("server running at http://localhost:3005");
 });

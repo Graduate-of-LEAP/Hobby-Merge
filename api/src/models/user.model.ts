@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema(
       ref: "Reaction",
       required: false,
     },
+    friends: {
+      type: [Schema.Types.ObjectId],
+      ref: "User",
+      required: false,
+    },
     lastLogin: {
       type: Date,
       default: Date.now,
