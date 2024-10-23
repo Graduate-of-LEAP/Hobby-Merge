@@ -3,12 +3,12 @@ import { Category } from "../../models/category.model";
 
 export const createCategory: RequestHandler = async (req, res) => {
   try {
-    const { name, image, collections } = req.body;
+    const { name, image, hobbies } = req.body;
 
     const category = await Category.create({
       name,
       image,
-      collections,
+      hobbies,
     });
     res.status(201).json({
       message: "category uuslee",

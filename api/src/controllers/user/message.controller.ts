@@ -43,15 +43,15 @@ export const getUserMessageID: RequestHandler = async (req, res) => {
 export const createUserMessage = async (req: CustomRequest, res: Response) => {
   try {
     const { to, message } = req.body;
-    const newCollection = await UserMessage.create({
+    const newHobby = await UserMessage.create({
       to,
       from: req.userID,
       message,
     });
 
     res.status(201).json({
-      messages: "Collection created successfully",
-      collection: newCollection,
+      messages: "hobby created successfully",
+      hobby: newHobby,
     });
   } catch (error) {
     res.status(500).json({ message: error });
