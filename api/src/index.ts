@@ -6,19 +6,16 @@ import http from "http";
 import { connectToDatabase } from "./database/connect";
 import {
   authRouter,
-  collectionRouter,
+  hobbyRouter,
   userMessageRouter,
   userRouter,
 } from "./routes";
-
 import { authMiddleware } from "./middleware/auth.middleware";
-import { collectionMessageRouter } from "./routes/collection.message.route";
 import categoryRouter from "./routes/category.route";
-import { reactionRoute } from "./routes/reaction.route";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
-import { chatSocket } from "./sockets/chat";
 import { connectSocket } from "./sockets/connect.socket";
+import { hobbyMessageRouter } from "./routes/hobby.message.route";
 
 dotenv.config();
 
@@ -43,8 +40,8 @@ app.use(authMiddleware);
 io.use(socketAuthMiddleware);
 
 app.use("/auth", authRouter);
-app.use("/collection", collectionRouter);
-app.use("collectionMessage", collectionMessageRouter);
+app.use("/hobby", hobbyRouter);
+app.use("hobbyMessage", hobbyMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
