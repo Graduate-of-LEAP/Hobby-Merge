@@ -1,3 +1,5 @@
+
+
 export const items: Item[] = [
   { id: 1, text: "News Feed" },
   { id: 2, text: "Wait list" },
@@ -15,36 +17,26 @@ export const infos: Item[] = [
 ];
 
 export const posts = [
+
   {
-    id: 1,
-    user: "Gerel",
-    time: "5 minutes ago",
-    profilePic: "/zurag.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: ["/uul.jpeg", "", ""],
-    bgColor: "#e6f2fb",
-    height: "320px",
-  },
-  {
-    id: 2,
+    id: 3,
     user: "Dulguun",
     time: "5 minutes ago",
     profilePic: "/1.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: ["/2.jpg", "/2.jpg", ""],
-    bgColor: "#DFEBFF",
-    height: "400px",
+    content: "",
+    viewcount:"",
+    images: ["/2.jpg"],
+    bgColor: "#c8daf7",
+    height: "250px",
   },
   {
     id: 3,
     user: "Dulguun",
     time: "5 minutes ago",
     profilePic: "/1.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: [],
+    content: "",
+    viewcount:"",
+    images: ["/2.jpg"],
     bgColor: "#c8daf7",
     height: "250px",
   },

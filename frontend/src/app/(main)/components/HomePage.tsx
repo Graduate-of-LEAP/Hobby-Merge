@@ -1,5 +1,5 @@
 "use client";
-
+import { FaEye } from "react-icons/fa";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
 import {
@@ -112,7 +112,7 @@ const HomePage = () => {
               ))}
             </div>
           </div>
-          <div className="h-fit grid gap-4">
+          <div className="h-fit grid ">
             <div>
               {posts.map((post) => (
                 <div
@@ -141,7 +141,7 @@ const HomePage = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-5 rounded ">
                     <div className="h-fit px-3 text-[#1b2468]">
                       <p>{post.content}</p>
                     </div>
@@ -169,8 +169,11 @@ const HomePage = () => {
                         ))}
                       </div>
                     )}
-
-                    <div className="flex gap-4 justify-end">
+                    <div className="flex gap-8 justify-end">
+                      <div className="flex items-center gap-2 text-[#1b2468]">
+                        <FaEye />
+                        <p className="font-semibold">{post.viewcount}</p>
+                      </div>
                       <div className="flex items-center gap-2 text-[#1b2468]">
                         <GiBrokenHeartZone />
                         <p className="font-semibold">Like</p>
