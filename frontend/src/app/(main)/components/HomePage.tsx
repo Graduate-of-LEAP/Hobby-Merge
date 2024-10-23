@@ -1,18 +1,30 @@
+"use client";
+
 import Image from "next/image";
-import { BiChevronRight, BiSearch } from "react-icons/bi";
+import { BiSearch } from "react-icons/bi";
 import {
   BsCamera,
   BsHouse,
   BsSendArrowUpFill,
   BsThreeDotsVertical,
 } from "react-icons/bs";
-import { FaCamera } from "react-icons/fa";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { GiBrokenHeartZone } from "react-icons/gi";
-import { MdMenu, MdPhotoCameraBack } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 import { TfiCommentAlt } from "react-icons/tfi";
+import { infos, items, posts } from "./MockData";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [selectedId, setSelectedId] = useState<number>(1);
+  const [infoSelect, setInfoSelect] = useState<number>(1);
+
+  const handleSelect = (id: number) => {
+    setSelectedId(id);
+  };
+  const handleSelectInfo = (id: number) => {
+    setInfoSelect(id);
+  };
   return (
     <div className="container m-auto h-screen border-2">
       <div className="flex h-screen">
@@ -20,29 +32,32 @@ const HomePage = () => {
           <div className="grid gap-5 justify-center">
             <p className="text-3xl font-semibold text-[#1b2468]">Hobby Merge</p>
             <div className="flex flex-col justify-center gap-2">
-              <div className="w-32 h-32 rounded-full border-2 m-auto border-[#1b2468] relative">
-                <Image src="/1.jpg" fill alt="zurag" className="rounded-full" />
+              <div className="w-32 h-32 rounded-full border-2 m-auto border-[#1b2468] relative overflow-hidden">
+                <Image
+                  src="/profile.jpg"
+                  fill
+                  alt="zurag"
+                  className="object-cover "
+                />
               </div>
               <p className="text-[18px] m-auto text-[#1b2468]">Dulguun</p>
             </div>
           </div>
-          <div className="h-fit grid gap-3 ">
-            <div className="flex gap-4 items-center bg-[#1b2468] text-white rounded-xl px-4 py-2 justify-center">
-              <BsHouse className="font-semibold w-5 h-5" />
-              <p> News Feed</p>
-            </div>
-            <div className="flex gap-4 items-center border-2 text-black rounded-xl px-4 py-2 border-[#1b2468] justify-center">
-              <BsHouse className="font-semibold w-5 h-5" />
-              <p className="font-semibold text-[#1b2468]"> Wait list</p>
-            </div>
-            <div className="flex gap-4 items-center border bg-[#1b2468] text-white rounded-xl px-4 py-2 justify-center">
-              <BsHouse className="font-semibold w-5 h-5" />
-              <p> Profile</p>
-            </div>
-            <div className="flex gap-4 items-center border-2 text-black rounded-xl px-4 py-2 border-[#1b2468] justify-center">
-              <BsHouse className="font-semibold w-5 h-5" />
-              <p className="font-semibold text-[#1b2468]">Settings</p>
-            </div>
+          <div className="h-fit grid gap-3 content-start">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => handleSelect(item.id)}
+                className={`flex gap-4 items-center ${
+                  selectedId === item.id
+                    ? "bg-[#1b2468] text-white"
+                    : " border text-[#1b2468] border-[#1b2468]"
+                } rounded-xl px-4 py-2 justify-center cursor-pointer`}
+              >
+                <BsHouse className="font-semibold w-5 h-5" />
+                <p className="font-semibold">{item.text}</p>
+              </div>
+            ))}
           </div>
           <div className="h-screen bg-[#e1eaf8] py-4 rounded-tl-3xl rounded-br-3xl">
             <div className="flex gap-2 border items-center justify-center font-semibold text-[#1b2468]">
@@ -65,10 +80,10 @@ const HomePage = () => {
             <div className="flex items-center gap-3">
               <div className="border-2 w-14 h-14 rounded-full bg-white border-[#1b2468] relative">
                 <Image
-                  src="/car.webp"
+                  src="/profile.jpg"
                   fill
                   alt="zurag"
-                  className="rounded-full"
+                  className="rounded-full object-cover"
                 />
               </div>
               <p className="font-semibold text-[#1b2468] text-xl">
@@ -76,174 +91,98 @@ const HomePage = () => {
               </p>
             </div>
             <div className="flex items-center gap-6">
-              <p className=" border-2 rounded-lg px-2 bg-[#1b2468] text-white border-[#1b2468]">
+              {/* <p className=" border-2 rounded-lg px-2 bg-[#1b2468] text-white border-[#1b2468]">
                 Your post
               </p>
               <p className=" text-[#1b2468] border-2 rounded-lg px-2 border-[#1b2468]">
                 Notifications
-              </p>
+              </p> */}
+              {infos.map((info) => (
+                <div
+                  key={info.id}
+                  onClick={() => handleSelectInfo(info.id)}
+                  className={`flex gap-4 items-center ${
+                    infoSelect === info.id
+                      ? "bg-[#1b2468] text-white"
+                      : " border text-[#1b2468] border-[#1b2468]"
+                  } rounded-xl px-4 py-2 justify-center cursor-pointer`}
+                >
+                  {info.text}
+                </div>
+              ))}
             </div>
           </div>
           <div className="h-fit grid gap-4">
-            <div className=" h-[320px] bg-[#e6f2fb]  py-4 px-8 flex flex-col gap-4 container rounded-tr-3xl rounded-bl-3xl">
-              <div className="flex items-center justify-between border-b border-[#1b2468] pb-2">
-                <div className="flex gap-2 ">
-                  <div className=" w-14 h-14 rounded-full bg-white border-[#1b2468] relative ">
-                    <Image
-                      src="/zurag.jpg"
-                      fill
-                      alt="zurag"
-                      className="rounded-full"
-                    />
+            <div>
+              {posts.map((post) => (
+                <div
+                  key={post.id}
+                  className={`h-[${post.height}] bg-[${post.bgColor}] py-4 px-8 flex flex-col gap-4 container rounded-tr-3xl rounded-bl-3xl border`}
+                >
+                  <div className="flex items-center justify-between border-b border-[#1b2468] pb-2">
+                    <div className="flex gap-2">
+                      <div className="w-14 h-14 rounded-full bg-white border-[#1b2468] relative">
+                        <Image
+                          src={post.profilePic}
+                          fill
+                          alt="profile"
+                          className="rounded-full"
+                        />
+                      </div>
+                      <div className="flex flex-col text-sm gap-x-2 text-white">
+                        <p className="font-semibold text-[#1b2468] text-xl">
+                          {post.user}
+                        </p>
+                        <p className="text-gray-400">{post.time}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <BsThreeDotsVertical className="w-6 h-6 text-[#1b2468]" />
+                    </div>
                   </div>
-                  <div className="flex flex-col text-sm gap-x-2 text-white">
-                    <p className="font-semibold text-[#1b2468] text-xl">
-                      Gerel
-                    </p>
-                    <p className="text-gray-400">5 minute age</p>
-                  </div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical className="w-6 h-6 text-[#1b2468] " />
-                </div>
-              </div>
-              <div className="flex flex-col gap-3">
-                <div className="h-fit px-3 text-[#1b2468]">
-                  <p>
-                    Hi everyone, today I was on the most beatifull mountain in
-                    the world, I also want to say hi to Dulguun and Turuu
-                  </p>
-                </div>
-                <div className="grid grid-cols-3 grid-rows-1 pl-12">
-                  <div className=" h-28 w-48 rounded-lg relative">
-                    <Image
-                      src="/uul.jpeg"
-                      fill
-                      alt="zurag"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="border-2 h-28 w-48 rounded-lg border-dashed border-[#1b2468]">
-                    2
-                  </div>
-                  <div className="border-2 h-28 w-48 rounded-lg border-dashed border-[#1b2468]">
-                    3
-                  </div>
-                </div>
-                <div className="flex gap-4 justify-end">
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <GiBrokenHeartZone />
-                    <p className="font-semibold">Like</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <TfiCommentAlt />
-                    <p className="font-semibold">Comment</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" h-[400px] bg-[#DFEBFF] py-4 px-8 flex flex-col gap-4 container rounded-tr-3xl rounded-bl-3xl">
-              <div className="flex items-center justify-between border-b border-[#1b2468] pb-2">
-                <div className="flex gap-2 ">
-                  <div className=" w-14 h-14 rounded-full bg-white border-[#1b2468] relative ">
-                    <Image
-                      src="/1.jpg"
-                      fill
-                      alt="zurag"
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col text-sm gap-x-2 text-white">
-                    <p className="font-semibold text-[#1b2468] text-xl">
-                      Dulguun
-                    </p>
-                    <p className="text-gray-400">5 minute age</p>
+
+                  <div className="flex flex-col gap-3">
+                    <div className="h-fit px-3 text-[#1b2468]">
+                      <p>{post.content}</p>
+                    </div>
+
+                    {post.images.length > 0 && (
+                      <div className="grid grid-cols-3 grid-rows-1 pl-12">
+                        {post.images.map((image, index) => (
+                          <div
+                            key={index}
+                            className={`${
+                              image
+                                ? "relative"
+                                : "border-2 border-dashed border-[#1b2468]"
+                            } h-28 w-48 rounded-lg`}
+                          >
+                            {image && (
+                              <Image
+                                src={image}
+                                fill
+                                alt="post image"
+                                className="rounded-lg"
+                              />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex gap-4 justify-end">
+                      <div className="flex items-center gap-2 text-[#1b2468]">
+                        <GiBrokenHeartZone />
+                        <p className="font-semibold">Like</p>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#1b2468]">
+                        <TfiCommentAlt />
+                        <p className="font-semibold">Comment</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <BsThreeDotsVertical className="w-6 h-6 text-[#1b2468] " />
-                </div>
-              </div>
-              <div className="flex flex-col gap-3">
-                <div className="h-fit px-3 text-[#1b2468]">
-                  <p>
-                    Hi everyone, today I was on the most beatifull mountain in
-                    the world, I also want to say hi to Dulguun and Turuu
-                  </p>
-                </div>
-                <div className="grid grid-cols-3 grid-rows-1 pl-12">
-                  <div className=" h-40 w-48 rounded-lg relative">
-                    <Image
-                      src="/2.jpg"
-                      fill
-                      alt="zurag"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="border-2 h-40 w-48 rounded-lg border-dashed border-[#1b2468] relative">
-                    <Image
-                      src="/2.jpg"
-                      fill
-                      alt="zurag"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="border-2 h-40 w-48 rounded-lg border-dashed border-[#1b2468]">
-                    3
-                  </div>
-                </div>
-                <div className="flex gap-4 justify-end pt-12">
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <GiBrokenHeartZone />
-                    <p className="font-semibold">Like</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <TfiCommentAlt />
-                    <p className="font-semibold">Comment</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" h-[250px] bg-[#c8daf7] py-4 px-8 flex flex-col gap-4 container rounded-tr-3xl rounded-bl-3xl">
-              <div className="flex items-center justify-between border-b border-[#1b2468] pb-2">
-                <div className="flex gap-2 ">
-                  <div className=" w-14 h-14 rounded-full bg-white border-[#1b2468] relative ">
-                    <Image
-                      src="/1.jpg"
-                      fill
-                      alt="zurag"
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col text-sm gap-x-2 text-white">
-                    <p className="font-semibold text-[#1b2468] text-xl">
-                      Dulguun
-                    </p>
-                    <p className="text-gray-400">5 minute age</p>
-                  </div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical className="w-6 h-6 text-[#1b2468] " />
-                </div>
-              </div>
-              <div className="flex flex-col gap-14">
-                <div className="h-fit px-3 text-[#1b2468] text-md">
-                  <p>
-                    Hi everyone, today I was on the most beatifull mountain in
-                    the world, I also want to say hi to Dulguun and Turuu
-                  </p>
-                </div>
-                <div className="flex gap-4 justify-end">
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <GiBrokenHeartZone />
-                    <p className="font-semibold">Like</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#1b2468]">
-                    <TfiCommentAlt />
-                    <p className="font-semibold">Comment</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="bg-[#1b2468] flex mt-16 border py-4 justify-center">
