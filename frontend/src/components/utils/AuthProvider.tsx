@@ -115,7 +115,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       console.error("Бүртгэлийн алдаа:", error);
     }
   };
-
   const login = async (email: string, password: string) => {
     try {
       const response = await api.post("/auth/login", { email, password });
@@ -149,7 +148,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         },
       });
 
-      setUser(response.data);
+      setUser(response.data.user);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);
@@ -172,7 +171,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   useEffect(() => {
     getUser();
   }, []);
-
   return (
     <UserContext.Provider
       value={{ user, getUser, setUser, LogOut, register, login }}

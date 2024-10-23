@@ -16,6 +16,7 @@ export const chatSocket = (socket: Socket) => {
   });
 
   socket.on("typing", (data: TypingData) => {
+    console.log("typing", data);
     socket.broadcast.emit("userTyping", data);
   });
 
