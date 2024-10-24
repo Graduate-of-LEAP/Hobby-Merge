@@ -104,8 +104,14 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
       setUser({ ...registeredUser });
 
+      // Check if the category array is empty or not
       const redirectPath =
-        registeredUser.role === "ADMIN" ? "/admin" : "/login";
+        registeredUser.category && registeredUser.category.length === 0
+          ? "/category"
+          : registeredUser.role === "ADMIN"
+          ? "/admin"
+          : "/";
+
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
@@ -125,7 +131,12 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       setUser({ ...loggedInUser, isAuthenticated: true });
 
       const redirectPath =
-        loggedInUser.role === "ADMIN" ? "/admin" : "/category";
+        loggedInUser.category && loggedInUser.category.length === 0
+          ? "/category"
+          : loggedInUser.role === "ADMIN"
+          ? "/admin"
+          : "/";
+
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
