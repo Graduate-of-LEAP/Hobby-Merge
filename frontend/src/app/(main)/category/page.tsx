@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "@/components/lib/axios";
+import { api } from "@/lib/axios";
 import {
   Category as CategoryType,
   UserContextType,
@@ -24,7 +24,7 @@ const Category = () => {
         },
       });
       setCategories(response.data.categories);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const toggleCategorySelection = (categoryId: string) => {
@@ -86,11 +86,10 @@ const Category = () => {
               key={index}
               role="button"
               onClick={() => toggleCategorySelection(category._id)}
-              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
-                selectedCategories.includes(category._id)
-                  ? "border-[#06B6D4]"
-                  : "border-[#dddddd] text-[#6f7079]"
-              }`}
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${selectedCategories.includes(category._id)
+                ? "border-[#06B6D4]"
+                : "border-[#dddddd] text-[#6f7079]"
+                }`}
             >
               {category?.name}
             </div>

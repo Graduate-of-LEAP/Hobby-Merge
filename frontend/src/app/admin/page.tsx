@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "@/components/lib/axios";
+import { api } from "@/lib/axios";
 import { Category } from "@/components/utils/AuthProvider";
 import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -98,9 +98,8 @@ export default function Home() {
 
       {/* Шинэ категори нэмэх модал */}
       <div
-        className={`w-full h-full bg-[#00000080] absolute left-0 top-0 flex justify-center items-center ${
-          visible ? "visible" : "hidden"
-        } duration-1000`}
+        className={`w-full h-full bg-[#00000080] absolute left-0 top-0 flex justify-center items-center ${visible ? "visible" : "hidden"
+          } duration-1000`}
       >
         <div className="w-200px rounded-2xl bg-black p-8 relative">
           <form onSubmit={createCategory} className="grid gap-6 h-fit">
