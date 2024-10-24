@@ -87,7 +87,7 @@ const Register = () => {
               />
             </div>
             <button
-              className="duration-700 border-2 border-[#226d78] hover:border-none py-2 rounded-3xl hover:bg-[#226d7b] hover:text-white text-[#226d78] text-lg font-semibold"
+              className="duration-700 border-2 border-[#226d78]  py-2 rounded-3xl hover:bg-[#226d7b] hover:text-white text-[#226d78] text-lg font-semibold"
               onClick={() => {
                 if (!name || !email || !password) {
                   toast.error("Бүх талбарыг бөглөнө үү.");
@@ -149,7 +149,7 @@ const Register = () => {
 
             {/* Login Button */}
             <button
-              className="border-2 border-[#226d78] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#226d78] text-lg font-semibold duration-700 hover:border-none"
+              className="border-2 border-[#226d78] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#226d78] text-lg font-semibold duration-700 "
               onClick={() => login(email, password)}
             >
               Login
