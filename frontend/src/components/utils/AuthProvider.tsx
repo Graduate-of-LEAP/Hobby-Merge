@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 type User = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -149,7 +149,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         },
       });
 
-      setUser(response.data);
+      setUser(response.data.user);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);

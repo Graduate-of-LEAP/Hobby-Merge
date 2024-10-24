@@ -37,12 +37,12 @@ const Category = () => {
 
   const saveSelectedCategories = async () => {
     if (user) {
-      console.log("User ID:", user.id);
+      console.log("User ID:", user._id);
       try {
         const response = await api.post(
           "/user",
           {
-            userId: user.id,
+            userId: user._id,
             categoryIds: selectedCategories,
           },
           {
