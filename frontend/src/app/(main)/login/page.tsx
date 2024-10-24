@@ -7,6 +7,7 @@ import { UserContextType, useUser } from "@/components/utils/AuthProvider";
 import { toast } from "react-toastify";
 import { LuLock } from "react-icons/lu";
 import { HiOutlineMail } from "react-icons/hi";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const Register = () => {
   const { register, login } = (useUser() as UserContextType) || {};
@@ -20,13 +21,16 @@ const Register = () => {
   const [move, setMove] = useState(false); // Controls section movement
   const [isIconVisible, setIsIconVisible] = useState(true);
   const [iconVisible, setIconVisible] = useState(true);
-
+  const [showPassword, setShowPassword] = useState(false);
   const onMouseEnterIcon = () => setIsIconVisible(false);
   const onMouseLeaveIcon = () => setIsIconVisible(true);
 
   const onMouseEnterLock = () => setIconVisible(false);
   const onMouseLeaveLock = () => setIconVisible(true);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div className="container flex justify-center m-auto relative">
       <div className="flex-1 h-screen bg-white flex justify-center items-center z-10">
@@ -48,6 +52,7 @@ const Register = () => {
               )}
               <input
                 type="text"
+                name="text"
                 className="outline-none placeholder:text-[#226d78] opacity-60"
                 placeholder="Full Name"
                 value={name}
@@ -63,7 +68,8 @@ const Register = () => {
                 <MdOutlineEmail className="opacity-60 h-5 w-5 text-[#226d78]" />
               )}
               <input
-                type="text"
+                type="email"
+                name="text"
                 className="outline-none placeholder:text-[#226d78] opacity-60"
                 placeholder="Email Address"
                 value={email}
@@ -79,12 +85,25 @@ const Register = () => {
                 <FaLock className="opacity-60 h-4 w-4 text-[#226d78]" />
               )}
               <input
-                type="password"
-                className="outline-none placeholder:text-[#226d78] opacity-60"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="outline-none placeholder:text-[#226d78] opacity-60 "
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {password && (
+                <div
+                  onClick={togglePasswordVisibility}
+                  className="cursor-pointer pl-12"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash className="opacity-60 h-4 w-4 text-[#226d78]" />
+                  ) : (
+                    <FaEye className="opacity-60 h-4 w-4 text-[#226d78]" />
+                  )}
+                </div>
+              )}
             </div>
             <button
               className="duration-700 border-2 border-[#226d78]  py-2 rounded-3xl hover:bg-[#226d7b] hover:text-white text-[#226d78] text-lg font-semibold"
@@ -124,6 +143,7 @@ const Register = () => {
               )}
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 className="outline-none duration-700 placeholder:text-[#226d78] opacity-60"
                 value={email}
@@ -139,16 +159,28 @@ const Register = () => {
                 <LuLock className="opacity-60 w-5 h-5 text-[#226d78]" />
               )}
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
+                name="password"
                 className="outline-none duration-1000 placeholder:text-[#226d78] opacity-60"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {password && (
+                <div
+                  onClick={togglePasswordVisibility}
+                  className="cursor-pointer pl-12"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash className="opacity-60 h-4 w-4 text-[#226d78]" />
+                  ) : (
+                    <FaEye className="opacity-60 h-4 w-4 text-[#226d78]" />
+                  )}
+                </div>
+              )}
             </div>
-
-            {/* Login Button */}
             <button
+              type="submit"
               className="border-2 border-[#226d78] py-2 rounded-3xl hover:bg-[#226D7B] hover:text-white bg-white text-[#226d78] text-lg font-semibold duration-700 "
               onClick={() => login(email, password)}
             >
@@ -169,13 +201,13 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen w-full absolute">
+      <div className="h-screen w-full absolute flex">
         <div
-          className={`h-screen w-[780px] border bg-[#226d78] flex justify-center items-center absolute transition-transform duration-1000 z-20 ${
+          className={`h-screen w-fit flex-1 border bg-[#226d78] flex justify-center items-center transition-transform duration-1000 z-20 ${
             move ? "translate-x-full" : "translate-x-0"
           } duration-1000`} // Transition for smooth sliding
         >
-          <div className="w-[410px] h-[147px] text-white flex flex-col gap-4">
+          <div className=" text-white grid gap-4 ">
             <div>
               <h1 className="text-5xl font-bold">Hobby Merge</h1>
               <h1 className="text-xl">
@@ -187,6 +219,7 @@ const Register = () => {
             </button>
           </div>
         </div>
+        <div className="flex-1"></div>
       </div>
     </div>
   );
