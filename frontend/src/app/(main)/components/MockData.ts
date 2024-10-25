@@ -1,5 +1,3 @@
-
-
 export const items: Item[] = [
   { id: 1, text: "News Feed" },
   { id: 2, text: "Wait list" },
@@ -16,28 +14,29 @@ export const infos: Item[] = [
   { id: 3, text: "Notifications" },
 ];
 
-export const posts = [
-
+export const Mockposts = [
   {
     id: 3,
     user: "Dulguun",
     time: "5 minutes ago",
     profilePic: "/1.jpg",
-    content: "",
-    viewcount:"",
-    images: ["/2.jpg"],
-    bgColor: "#c8daf7",
-    height: "250px",
-  },
-  {
-    id: 3,
-    user: "Dulguun",
-    time: "5 minutes ago",
-    profilePic: "/1.jpg",
-    content: "",
-    viewcount:"",
+    content: "Hello",
+    viewcount: "",
     images: ["/2.jpg"],
     bgColor: "#c8daf7",
     height: "250px",
   },
 ];
+export const comment=[
+  {
+    id: 1,
+    user: "Dulguun",
+    profilePic: "/1.jpg",
+    content: "",
+    time: "",
+    height: "auto",
+    viewcount: "",
+    reply: [],
+    like: "",
+  },
+]
