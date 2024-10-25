@@ -41,10 +41,12 @@ export type Hobby = {
   posts: Post[];
   messages: CollectionMessage[];
 };
+
 type Reaction = {
   _id: string;
   reaction: string;
 };
+
 type Post = {
   _id: string;
   user: User;
@@ -54,6 +56,7 @@ type Post = {
   reaction: Reaction;
   comments: Comment;
 };
+
 type CollectionMessage = {
   _id: string;
   message: string;
@@ -61,6 +64,7 @@ type CollectionMessage = {
   user: User;
   posts: Post[];
 };
+
 type Comment = {
   _id: string;
   content: string;
@@ -96,6 +100,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const register = async (newUser: NewUser) => {
@@ -109,17 +114,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       }
 
       setUser({ ...registeredUser });
-      console.log("Registered user categories:", registeredUser.category);
-
-      // Determine redirect path
-      const redirectPath =
-        !registeredUser.category || registeredUser.category.length === 0
-          ? "/category"
-          : registeredUser.role === "ADMIN"
-          ? "/admin"
-          : "/";
-
-      router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
     } catch (error) {
@@ -140,15 +134,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       console.log(response.data);
 
       setUser({ ...loggedInUser, isAuthenticated: true });
-
-      const redirectPath =
-        loggedInUser.category && loggedInUser.category.length === 0
-          ? "/category"
-          : loggedInUser.role === "ADMIN"
-          ? "/admin"
-          : "/";
-
-      router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
     } catch (error) {
@@ -192,11 +177,37 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       toast.error("Log out failed.");
     }
   };
+
   useEffect(() => {
-    getUser();
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        router.replace("/login");
+        setLoading(false);
+        return;
+      }
+
+      await getUser();
+      setLoading(false);
+    };
+
+    fetchUser();
   }, []);
 
-  console.log(user);
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        router.replace("/login");
+      } else if (user?.role === "ADMIN") {
+        router.push("/admin");
+      } else if (user?.category?.length === 0) {
+        router.push("/category");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [user, loading, router]);
 
   return (
     <UserContext.Provider
@@ -206,4 +217,5 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
     </UserContext.Provider>
   );
 };
+
 export const useUser = () => useContext(UserContext);
