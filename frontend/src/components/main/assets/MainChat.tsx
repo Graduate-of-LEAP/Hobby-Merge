@@ -12,7 +12,20 @@ import { useUser } from '@/components/utils/AuthProvider';
 import { api } from '@/lib/axios';
 import { useHobby } from '@/components/utils/HobbyProvider';
 import { toast } from 'react-toastify';
+import io, { Socket } from "socket.io-client";
 
+interface Message {
+    from: string;
+    message: string;
+}
+interface User {
+    _id: string;
+    friends: string[];
+}
+interface TypingInfo {
+    from: string;
+    to: string;
+}
 export const MainChat = () => {
     const [typing, setTyping] = useState<boolean>()
     const [message, setMessage] = useState<string>("");
