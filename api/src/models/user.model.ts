@@ -28,11 +28,13 @@ const userSchema = new mongoose.Schema(
         required: false,
       },
     ],
-    hobby: {
-      type: Schema.Types.ObjectId,
-      ref: "Hobby",
-      required: false,
-    },
+    hobby: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Hobby",
+        required: false,
+      },
+    ],
     reaction: {
       type: Schema.Types.ObjectId,
       ref: "Reaction",
