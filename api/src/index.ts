@@ -20,14 +20,14 @@ import { hobbyMessageRouter } from "./routes/hobby.message.route";
 dotenv.config();
 
 const PORT = process.env.PORT || 3030;
-
+const PORTSOCKET = process.env.SOCKET || 3030;
 connectToDatabase();
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://192.168.11.162:4000"],
+    origin: ["http://localhost:3000", PORTSOCKET.toString()],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -47,12 +47,13 @@ app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
 
 connectSocket(io);
+
 app.get("/", (_req, res) => {
   res.json({ message: "Та нэвтрэнэ үү!" });
 });
 
-server.listen(3005, () => {
-  console.log("server running at http://localhost:3005");
+server.listen(PORTSOCKET, () => {
+  console.log(`server running at ${PORTSOCKET}`);
 });
 
 app.listen(PORT, () => {
