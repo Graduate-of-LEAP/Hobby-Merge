@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Category = () => {
   const { user, getUser } = (useUser() as UserContextType) || {};
@@ -24,7 +25,7 @@ const Category = () => {
         },
       });
       setCategories(response.data.categories);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const toggleCategorySelection = (categoryId: string) => {
@@ -40,7 +41,7 @@ const Category = () => {
       console.log("User ID:", user._id);
       try {
         const response = await api.post(
-          "/user",
+          "/user/category",
           {
             userId: user._id,
             categoryIds: selectedCategories,
@@ -86,23 +87,26 @@ const Category = () => {
               key={index}
               role="button"
               onClick={() => toggleCategorySelection(category._id)}
-              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${selectedCategories.includes(category._id)
-                ? "border-[#06B6D4]"
-                : "border-[#dddddd] text-[#6f7079]"
-                }`}
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
+                selectedCategories.includes(category._id)
+                  ? "border-[#06B6D4]"
+                  : "border-[#dddddd] text-[#6f7079]"
+              }`}
             >
               {category?.name}
             </div>
           ))}
         </div>
-        <div className="mt-16">
-          <button
-            onClick={saveSelectedCategories}
-            className="text-white bg-[942AE7] rounded-full w-64 p-2"
-          >
-            Үргэлжлүүлэх
-          </button>
-        </div>
+        <Link href={`/hobby`}>
+          <div className="mt-16">
+            <button
+              onClick={saveSelectedCategories}
+              className="text-white bg-[942AE7] rounded-full w-64 p-2"
+            >
+              Үргэлжлүүлэх
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );

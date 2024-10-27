@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { User } from "../../models/user.model";
+import jwt from "jsonwebtoken";
 
 export const Register: RequestHandler = async (req, res): Promise<void> => {
   const { id, name, email, password } = req.body;
@@ -23,6 +24,11 @@ export const Register: RequestHandler = async (req, res): Promise<void> => {
       password,
     });
 
+    const token = jwt.sign(
+      { id: newUser.id, email: newUser.email },
+      process.env.JWT_SECRET as string
+    );
+
     res.status(201).json({
       message: "Registered successfully",
       user: {
@@ -30,14 +36,13 @@ export const Register: RequestHandler = async (req, res): Promise<void> => {
         name: newUser.name,
         email: newUser.email,
       },
+      token,
     });
-    return;
   } catch (error) {
     console.error("Registration error:", error);
 
     res.status(500).json({
       message: "Internal Server Error",
     });
-    return;
   }
 };
