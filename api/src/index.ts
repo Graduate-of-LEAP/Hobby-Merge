@@ -20,7 +20,7 @@ import { hobbyMessageRouter } from "./routes/hobby.message.route";
 dotenv.config();
 
 const PORT = process.env.PORT || 3030;
-const PORTSOCKET = process.env.SOCKET || 3030;
+const PORTSOCKET = process.env.SOCKET || 3005;
 connectToDatabase();
 
 const app = express();
