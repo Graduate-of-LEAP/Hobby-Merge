@@ -107,10 +107,11 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       }
 
       setUser({ ...registeredUser });
+      console.log("Registered user categories:", registeredUser.category);
 
       // Determine redirect path
       const redirectPath =
-        registeredUser.category && registeredUser.category.length === 0
+        !registeredUser.category || registeredUser.category.length === 0
           ? "/category"
           : registeredUser.role === "ADMIN"
           ? "/admin"
@@ -153,6 +154,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       console.error("Нэвтрэх алдаа:", error);
     }
   };
+
   const getUser = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -167,7 +169,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("User fetch response:", response.data.user);
       setUser(response.data.user);
     } catch (error) {
       if (axios.isAxiosError(error)) {
