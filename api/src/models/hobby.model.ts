@@ -11,7 +11,7 @@ const hobbySchema = new mongoose.Schema(
     },
     cover_image: {
       type: String,
-      required: true,
+      required: false,
     },
     users: [
       {

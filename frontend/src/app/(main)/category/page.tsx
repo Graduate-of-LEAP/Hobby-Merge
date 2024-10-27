@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Category = () => {
   const { user, getUser } = (useUser() as UserContextType) || {};
@@ -96,14 +97,16 @@ const Category = () => {
             </div>
           ))}
         </div>
-        <div className="mt-16">
-          <button
-            onClick={saveSelectedCategories}
-            className="text-white bg-[942AE7] rounded-full w-64 p-2"
-          >
-            Үргэлжлүүлэх
-          </button>
-        </div>
+        <Link href={`/hobby`}>
+          <div className="mt-16">
+            <button
+              onClick={saveSelectedCategories}
+              className="text-white bg-[942AE7] rounded-full w-64 p-2"
+            >
+              Үргэлжлүүлэх
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
