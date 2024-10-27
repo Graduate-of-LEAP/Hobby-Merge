@@ -99,9 +99,12 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const register = async (newUser: NewUser) => {
     try {
       const response = await api.post("/auth/register", newUser);
-      console.log("Registration response:", response.data); // Log full response data
+      console.log("Registration response:", response.data);
 
       const { token, user: registeredUser } = response.data;
+      if (!registeredUser) {
+        throw new Error("User data is not available in the response");
+      }
 
       setUser({ ...registeredUser });
 
