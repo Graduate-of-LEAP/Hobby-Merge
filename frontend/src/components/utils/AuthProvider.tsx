@@ -32,7 +32,7 @@ export type Category = {
   collection: Collection[];
 };
 
-type Collection = {
+export type Collection = {
   _id: string;
   name: string;
   description: string;
