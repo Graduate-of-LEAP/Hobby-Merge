@@ -99,12 +99,13 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const register = async (newUser: NewUser) => {
     try {
       const response = await api.post("/auth/register", newUser);
-      console.log("Registration response:", response);
+      console.log("Registration response:", response.data); // Log full response data
+
       const { token, user: registeredUser } = response.data;
 
       setUser({ ...registeredUser });
 
-      // Check if the category array is empty or not
+      // Determine redirect path
       const redirectPath =
         registeredUser.category && registeredUser.category.length === 0
           ? "/category"
@@ -115,10 +116,14 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
-      console.log("Token being sent:", token);
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Log the error response
+        console.error("Registration error response:", error.response?.data);
+      } else {
+        console.error("Unexpected registration error:", error);
+      }
       toast.error("Бүртгэлтэй байна!");
-      console.error("Бүртгэлийн алдаа:", error);
     }
   };
 
