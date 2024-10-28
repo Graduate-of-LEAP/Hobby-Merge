@@ -37,9 +37,10 @@ export type Hobby = {
   name: string;
   description: string;
   cover_image: string;
+  category: string;
   users: User[];
   posts: Post[];
-  messages: CollectionMessage[];
+  messages: HobbyMessage[];
 };
 
 type Reaction = {
@@ -57,7 +58,7 @@ type Post = {
   comments: Comment;
 };
 
-type CollectionMessage = {
+type HobbyMessage = {
   _id: string;
   message: string;
   hobby: Hobby;
