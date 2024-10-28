@@ -1,6 +1,6 @@
 import mongoose, { model, Schema } from "mongoose";
 
-const collectionSchema = new mongoose.Schema(
+const hobbySchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -11,7 +11,7 @@ const collectionSchema = new mongoose.Schema(
     },
     cover_image: {
       type: String,
-      required: true,
+      required: false,
     },
     users: [
       {
@@ -30,11 +30,11 @@ const collectionSchema = new mongoose.Schema(
     messages: [
       {
         type: Schema.Types.ObjectId,
-        ref: "CollectionMessage",
+        ref: "HobbyMessage",
         required: false,
       },
     ],
   },
   { timestamps: true }
 );
-export const Collection = model("Collection", collectionSchema);
+export const Hobby = model("Hobby", hobbySchema);

@@ -8,13 +8,13 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { api } from "../lib/axios";
+import { api } from "../../lib/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 type User = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -32,7 +32,7 @@ export type Category = {
   collection: Collection[];
 };
 
-type Collection = {
+export type Collection = {
   _id: string;
   name: string;
   description: string;
@@ -99,20 +99,35 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const register = async (newUser: NewUser) => {
     try {
       const response = await api.post("/auth/register", newUser);
-      console.log("Registration response:", response);
+      console.log("Registration response:", response.data);
+
       const { token, user: registeredUser } = response.data;
+      if (!registeredUser) {
+        throw new Error("User data is not available in the response");
+      }
 
       setUser({ ...registeredUser });
+      console.log("Registered user categories:", registeredUser.category);
 
+      // Determine redirect path
       const redirectPath =
-        registeredUser.role === "ADMIN" ? "/admin" : "/login";
+        !registeredUser.category || registeredUser.category.length === 0
+          ? "/category"
+          : registeredUser.role === "ADMIN"
+          ? "/admin"
+          : "/";
+
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
       localStorage.setItem("token", token);
-      console.log("Token being sent:", token);
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Log the error response
+        console.error("Registration error response:", error.response?.data);
+      } else {
+        console.error("Unexpected registration error:", error);
+      }
       toast.error("Бүртгэлтэй байна!");
-      console.error("Бүртгэлийн алдаа:", error);
     }
   };
 
@@ -125,7 +140,12 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       setUser({ ...loggedInUser, isAuthenticated: true });
 
       const redirectPath =
-        loggedInUser.role === "ADMIN" ? "/admin" : "/category";
+        loggedInUser.category && loggedInUser.category.length === 0
+          ? "/category"
+          : loggedInUser.role === "ADMIN"
+          ? "/admin"
+          : "/";
+
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
@@ -134,6 +154,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       console.error("Нэвтрэх алдаа:", error);
     }
   };
+
   const getUser = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -148,8 +169,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
           Authorization: `Bearer ${token}`,
         },
       });
-
-      setUser(response.data);
+      console.log("User fetch response:", response.data.user);
+      setUser(response.data.user);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);

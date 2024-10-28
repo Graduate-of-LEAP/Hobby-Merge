@@ -11,10 +11,10 @@ const categorySchema = new mongoose.Schema(
       required: false,
     },
 
-    collections: [
+    hobbies: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Collection",
+        ref: "Hobby",
         required: false,
       },
     ],

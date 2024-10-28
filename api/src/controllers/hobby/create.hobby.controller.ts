@@ -1,11 +1,11 @@
 import { RequestHandler } from "express";
-import { Collection } from "../../models/collection.model";
+import { Hobby } from "../../models/hobby.model";
 
-export const createCollection: RequestHandler = async (req, res) => {
+export const createHobby: RequestHandler = async (req, res) => {
   try {
     const { name, description, cover_image, users, posts, messages } = req.body;
 
-    const newCollection = await Collection.create({
+    const newHobby = await Hobby.create({
       name,
       description,
       cover_image,
@@ -15,11 +15,11 @@ export const createCollection: RequestHandler = async (req, res) => {
     });
 
     res.status(201).json({
-      messages: "Collection created successfully",
-      collection: newCollection,
+      messages: "Hobby created successfully",
+      Hobby: newHobby,
     });
   } catch (error) {
-    console.error("Create collection error:", error);
+    console.error("Create Hobby error:", error);
     res.status(500).json({
       message: "Internal Server Error",
     });

@@ -1,9 +1,5 @@
 import { PostCard } from "./components/post";
 
 export default function Home() {
-  return (
-    <div>
-      <PostCard />
-    </div>
-  );
+  return <div>main</div>;
 }

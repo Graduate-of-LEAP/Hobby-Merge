@@ -1,14 +1,14 @@
 import mongoose, { model, Schema } from "mongoose";
 
-const collectionMessageSchema = new mongoose.Schema(
+const hobbyMessageSchema = new mongoose.Schema(
   {
     message: {
       type: String,
       required: true,
     },
-    collection: {
+    hobby: {
       type: Schema.Types.ObjectId,
-      ref: "Collection",
+      ref: "Hobby",
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -24,7 +24,4 @@ const collectionMessageSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-export const CollectionMessage = model(
-  "CollectionMessage",
-  collectionMessageSchema
-);
+export const HobbyMessage = model("HobbyMessage", hobbyMessageSchema);

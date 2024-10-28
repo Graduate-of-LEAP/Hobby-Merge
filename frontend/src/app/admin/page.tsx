@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "@/components/lib/axios";
+import { api } from "@/lib/axios";
 import { Category } from "@/components/utils/AuthProvider";
 import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -15,7 +15,15 @@ export default function Home() {
     e.preventDefault(); // Form илгээхэд default үйлдлийг болиулах
     if (categoryName) {
       try {
-        const response = await api.post("/category", { name: categoryName });
+        const response = await api.post(
+          "/category",
+          { name: categoryName },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         console.log("Категори үүсгэгдлээ:", response);
         setCategoryName(""); // Инпутын утгыг хоосон болгох
         setVisible(false); // Модалыг хаах
@@ -31,7 +39,11 @@ export default function Home() {
   // Категорийн жагсаалт авах функц
   const getCategory = async () => {
     try {
-      const response = await api.get("/category");
+      const response = await api.get("/category", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setCategories(response.data.categories);
     } catch (error) {
       console.error("Категорийн жагсаалт авахад алдаа гарлаа:", error);
@@ -41,7 +53,11 @@ export default function Home() {
   // Категори устгах функц
   const deleteCategory = async (_id: string) => {
     try {
-      const response = await api.delete(`/category/${_id}`);
+      const response = await api.delete(`/category/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       console.log("Категори устгагдлаа:", response);
       getCategory(); // Устгасны дараа жагсаалтыг шинэчлэх
     } catch (error) {
@@ -82,9 +98,8 @@ export default function Home() {
 
       {/* Шинэ категори нэмэх модал */}
       <div
-        className={`w-full h-full bg-[#00000080] absolute left-0 top-0 flex justify-center items-center ${
-          visible ? "visible" : "hidden"
-        } duration-1000`}
+        className={`w-full h-full bg-[#00000080] absolute left-0 top-0 flex justify-center items-center ${visible ? "visible" : "hidden"
+          } duration-1000`}
       >
         <div className="w-200px rounded-2xl bg-black p-8 relative">
           <form onSubmit={createCategory} className="grid gap-6 h-fit">
