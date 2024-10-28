@@ -27,7 +27,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", PORTSOCKET.toString()],
+    origin: ["*"],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -39,18 +39,7 @@ app.use(express.json());
 app.use(authMiddleware);
 io.use(socketAuthMiddleware);
 
-app.use("/auth", authRouter);
-app.use("/hobby", hobbyRouter);
-app.use("hobbyMessage", hobbyMessageRouter);
-app.use("/user", userRouter);
-app.use("/user/message", userMessageRouter);
-app.use("/category", categoryRouter);
-
 connectSocket(io);
-
-app.get("/", (_req, res) => {
-  res.json({ message: "Та нэвтрэнэ үү!" });
-});
 
 server.listen(PORTSOCKET, () => {
   console.log(`server running at ${PORTSOCKET}`);
