@@ -12,14 +12,16 @@ import { connectSocket } from "./sockets/connect.socket";
 dotenv.config();
 
 const PORTSOCKET = process.env.SOCKET || 3005;
+const PORT = process.env.SOCKET || 3000;
 connectToDatabase();
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["*"],
+    origin: ["http://localhost:3000", PORT.toString()],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
