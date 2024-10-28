@@ -14,38 +14,29 @@ export const infos: Item[] = [
   { id: 3, text: "Notifications" },
 ];
 
-export const posts = [
-  {
-    id: 1,
-    user: "Gerel",
-    time: "5 minutes ago",
-    profilePic: "/zurag.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: ["/uul.jpeg", "", ""],
-    bgColor: "#e6f2fb",
-    height: "320px",
-  },
-  {
-    id: 2,
-    user: "Dulguun",
-    time: "5 minutes ago",
-    profilePic: "/1.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: ["/2.jpg", "/2.jpg", ""],
-    bgColor: "#DFEBFF",
-    height: "400px",
-  },
+export const Mockposts = [
   {
     id: 3,
     user: "Dulguun",
     time: "5 minutes ago",
     profilePic: "/1.jpg",
-    content:
-      "Hi everyone, today I was on the most beatifull mountain in the world, I also want to say hi to Dulguun and Turuu",
-    images: [],
+    content: "Hello",
+    viewcount: "",
+    images: ["/2.jpg"],
     bgColor: "#c8daf7",
     height: "250px",
   },
 ];
+export const comment=[
+  {
+    id: 1,
+    user: "Dulguun",
+    profilePic: "/1.jpg",
+    content: "",
+    time: "",
+    height: "auto",
+    viewcount: "",
+    reply: [],
+    like: "",
+  },
+]
