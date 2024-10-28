@@ -52,10 +52,6 @@ app.get("/", (_req, res) => {
   res.json({ message: "Та нэвтрэнэ үү!" });
 });
 
-server.listen(PORTSOCKET, () => {
-  console.log(`server running at ${PORTSOCKET}`);
-});
-
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`);
 });
