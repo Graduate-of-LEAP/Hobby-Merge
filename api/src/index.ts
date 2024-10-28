@@ -4,18 +4,10 @@ import cors from "cors";
 import http from "http";
 
 import { connectToDatabase } from "./database/connect";
-import {
-  authRouter,
-  hobbyRouter,
-  userMessageRouter,
-  userRouter,
-} from "./routes";
 import { authMiddleware } from "./middleware/auth.middleware";
-import categoryRouter from "./routes/category.route";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
 import { connectSocket } from "./sockets/connect.socket";
-import { hobbyMessageRouter } from "./routes/hobby.message.route";
 
 dotenv.config();
 
