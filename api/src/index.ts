@@ -11,7 +11,6 @@ import { connectSocket } from "./sockets/connect.socket";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3030;
 const PORTSOCKET = process.env.SOCKET || 3005;
 connectToDatabase();
 
@@ -21,7 +20,6 @@ const io = new Server(server, {
   cors: {
     origin: ["*"],
     methods: ["GET", "POST"],
-    credentials: true,
   },
 });
 
