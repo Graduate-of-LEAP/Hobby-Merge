@@ -7,7 +7,9 @@ interface CustomRequest extends Request {
 
 export const getMe = async (req: CustomRequest, res: Response) => {
   try {
-    const user = await User.findById(req.userID).select("-password");
+    const user = await User.findById(req.userID)
+      .select("-password")
+      .populate("hobby");
 
     if (!user) {
       res.status(404).json({ message: "user not found" });
