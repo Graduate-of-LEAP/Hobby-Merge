@@ -46,8 +46,7 @@ app.use("hobbyMessage", hobbyMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
-// app.use("/post", postRouter);
-
+app.use("/post", postRouter);
 
 connectSocket(io);
 
