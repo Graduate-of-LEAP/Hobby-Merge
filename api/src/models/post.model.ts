@@ -1,6 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model";
-import { Reaction } from "./reaction.model";
 
 const postSchema = new mongoose.Schema(
   {

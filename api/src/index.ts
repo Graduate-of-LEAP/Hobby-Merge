@@ -16,6 +16,7 @@ import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
 import { connectSocket } from "./sockets/connect.socket";
 import { hobbyMessageRouter } from "./routes/hobby.message.route";
+import { postRouter } from "./routes/post.route";
 
 dotenv.config();
 
@@ -45,6 +46,8 @@ app.use("hobbyMessage", hobbyMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);
+// app.use("/post", postRouter);
+
 
 connectSocket(io);
 
