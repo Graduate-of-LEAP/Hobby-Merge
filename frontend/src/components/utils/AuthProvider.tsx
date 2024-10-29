@@ -19,7 +19,7 @@ type User = {
   email: string;
   role: string;
   category: Category[];
-  collection: Collection[];
+  hobby: Hobby[];
   reaction: Reaction[];
   lastLogin: Date;
   isVerified: boolean;
@@ -29,10 +29,10 @@ export type Category = {
   _id: string;
   name: string;
   image: string;
-  collection: Collection[];
+  hobby: Hobby[];
 };
 
-export type Collection = {
+export type Hobby = {
   _id: string;
   name: string;
   description: string;
@@ -57,7 +57,7 @@ type Post = {
 type CollectionMessage = {
   _id: string;
   message: string;
-  collection: Collection;
+  hobby: Hobby;
   user: User;
   posts: Post[];
 };
@@ -84,7 +84,9 @@ export interface UserContextType {
   login: (email: string, password: string) => void;
 }
 
-export const UserContext = createContext<UserContextType>({} as UserContextType);
+export const UserContext = createContext<UserContextType>(
+  {} as UserContextType
+);
 
 interface UserContextProviderProps {
   children: ReactNode;
@@ -114,8 +116,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         !registeredUser.category || registeredUser.category.length === 0
           ? "/category"
           : registeredUser.role === "ADMIN"
-            ? "/admin"
-            : "/";
+          ? "/admin"
+          : "/";
 
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
@@ -143,8 +145,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         loggedInUser.category && loggedInUser.category.length === 0
           ? "/category"
           : loggedInUser.role === "ADMIN"
-            ? "/admin"
-            : "/";
+          ? "/admin"
+          : "/";
 
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");
@@ -193,6 +195,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log(user);
 
   return (
     <UserContext.Provider
