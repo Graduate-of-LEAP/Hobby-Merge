@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { UserContextProvider } from "@/components/utils/AuthProvider";
 import { useEffect, useState } from "react";
+import { HobbyProvider } from "@/components/utils/HobbyProvider";
 
 export default function RootLayout({
   children,
@@ -19,8 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <UserContextProvider>
-          <div>{children}</div>
-          <ToastContainer />
+          <HobbyProvider>
+            <div>{children}</div>
+            <ToastContainer />
+          </HobbyProvider>
         </UserContextProvider>
       </body>
     </html>
