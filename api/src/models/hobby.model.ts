@@ -13,11 +13,16 @@ const hobbySchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
     users: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: false,
+        required: true,
       },
     ],
     posts: [

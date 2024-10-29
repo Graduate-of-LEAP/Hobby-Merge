@@ -15,7 +15,7 @@ const categorySchema = new mongoose.Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Hobby",
-        required: false,
+        required: true,
       },
     ],
   },
