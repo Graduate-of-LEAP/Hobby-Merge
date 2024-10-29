@@ -84,7 +84,7 @@ export interface UserContextType {
   login: (email: string, password: string) => void;
 }
 
-export const UserContext = createContext<UserContextType | null>(null);
+export const UserContext = createContext<UserContextType>({} as UserContextType);
 
 interface UserContextProviderProps {
   children: ReactNode;
@@ -114,8 +114,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         !registeredUser.category || registeredUser.category.length === 0
           ? "/category"
           : registeredUser.role === "ADMIN"
-          ? "/admin"
-          : "/";
+            ? "/admin"
+            : "/";
 
       router.push(redirectPath);
       toast.success("Бүртгэл амжилттай!");
@@ -143,8 +143,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         loggedInUser.category && loggedInUser.category.length === 0
           ? "/category"
           : loggedInUser.role === "ADMIN"
-          ? "/admin"
-          : "/";
+            ? "/admin"
+            : "/";
 
       router.push(redirectPath);
       toast.success("Нэвтрэлт амжилттай!");

@@ -25,7 +25,10 @@ const Hobby = () => {
       });
       setHobbies(response.data);
       console.log(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error saving selected hobbies:", error);
+      toast.error("Hobby хадгалахад алдаа гарлаа.");
+    }
   };
 
   const toggleCategorySelection = (hobbyId: string) => {
@@ -84,11 +87,10 @@ const Hobby = () => {
               key={index}
               role="button"
               onClick={() => toggleCategorySelection(hobby._id)}
-              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
-                selectedHobbies.includes(hobby._id)
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${selectedHobbies.includes(hobby._id)
                   ? "border-[#06B6D4]"
                   : "border-[#dddddd] text-[#6f7079]"
-              }`}
+                }`}
             >
               {hobby?.name}
             </div>
