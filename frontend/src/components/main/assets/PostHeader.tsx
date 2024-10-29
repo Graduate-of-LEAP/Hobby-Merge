@@ -4,18 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const paths = [
-  {
-    id: "1 ",
-    path: "/post",
-    pathname: "Your Post",
-  },
-  {
-    id: "2 ",
-    path: "/notif",
-    pathname: "Notifications",
-  },
-];
 export const PostHeader = () => {
   const pathname = usePathname();
   return (
@@ -34,17 +22,12 @@ export const PostHeader = () => {
         </button>
       </div>
       <div className="flex gap-11 items-center">
-        {paths.map((path) => (
-          <Link href={path.path}>
-            <button
-              className={`text-black text-lg font-semibold ${
-                pathname === path.path ? "underline underline-offset-4" : "none"
-              }`}
-            >
-              {path.pathname}
-            </button>
-          </Link>
-        ))}
+        <button className="text-black text-lg font-semibold hover:underline underline-offset-4">
+          Your Post
+        </button>
+        <button className="text-black text-lg font-semibold hover:underline underline-offset-4">
+          Notifications
+        </button>
       </div>
     </div>
   );
