@@ -19,7 +19,7 @@ export const Suggest = () => {
       <div>
         <h1 className="text-[20px] font-semibold mb-4">Suggestion</h1>
         <div className="flex flex-col gap-6">
-          {user?.hobby.map((hobby: Hobby, index) => (
+          {user?.hobby?.map((hobby: Hobby, index) => (
             <div
               key={index}
               className="flex gap-2 items-center font-semibold cursor-pointer"
