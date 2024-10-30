@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model";
-import { Reaction } from "./reaction.model";
 
 const postSchema = new mongoose.Schema(
   {
     user: {
+      type: Schema.Types.ObjectId,
       ref: "User",
+      required: false,
     },
     content: {
       type: String,
@@ -22,12 +22,12 @@ const postSchema = new mongoose.Schema(
     reaction: {
       ref: "Reaction",
       type: Schema.Types.ObjectId,
-      required: true,
+     
     },
     comments: {
       ref: "Comment",
       type: Schema.Types.ObjectId,
-      required: true,
+     
     },
   },
 
