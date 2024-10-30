@@ -17,12 +17,27 @@ import { socketAuthMiddleware } from "./middleware/socket.auth.middleware";
 import { connectSocket } from "./sockets/connect.socket";
 import { hobbyMessageRouter } from "./routes/hobby.message.route";
 import { postRouter } from "./routes/post.route";
+import Multer, { memoryStorage } from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import { createCloudinaryController } from "./controllers/cloudinary/create-cloudinary.controller";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3030;
 const PORTSOCKET = process.env.SOCKET || 3005;
 connectToDatabase();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
+
+const storage = memoryStorage();
+
+const upload = Multer({
+  storage,
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -49,6 +64,8 @@ app.use("/category", categoryRouter);
 app.use("/post", postRouter);
 
 connectSocket(io);
+
+app.post("/upload", upload.single("image"), createCloudinaryController);
 
 app.get("/", (_req, res) => {
   res.json({ message: "Та нэвтрэнэ үү!" });
