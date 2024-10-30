@@ -204,6 +204,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         router.push("/admin");
       } else if (user?.category?.length === 0) {
         router.push("/category");
+      } else if (user?.hobby?.length === 0) {
+        router.push("/hobby");
       } else {
         router.push("/");
       }
