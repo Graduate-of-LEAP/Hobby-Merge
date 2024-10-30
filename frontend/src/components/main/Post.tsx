@@ -4,7 +4,7 @@ import { PostFooter } from "./assets/PostFooter";
 
 export const Post = () => {
   return (
-    <div className="">
+    <div className="h-fit border">
       <PostHeader />
       <PostFooter />
     </div>
