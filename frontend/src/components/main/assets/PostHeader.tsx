@@ -7,8 +7,8 @@ import React from "react";
 export const PostHeader = () => {
   const pathname = usePathname();
   return (
-    <div className="border container flex justify-between px-12 py-5 w-screen bg-[#D8EBF5] rounded-2xl">
-      <div className="flex gap-6 items-center">
+    <div className="border flex justify-between px-12 py-5  bg-[#D8EBF5] rounded-2xl">
+      <div className="flex gap-6 items-center w-full">
         <div className="relative w-20 h-20 rounded-full ">
           <Image
             src={"/2.jpg"}
