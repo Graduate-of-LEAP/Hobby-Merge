@@ -43,7 +43,7 @@ export type Hobby = {
   messages: HobbyMessage[];
 };
 
-type Reaction = {
+export type Reaction = {
   _id: string;
   reaction: string;
 };
