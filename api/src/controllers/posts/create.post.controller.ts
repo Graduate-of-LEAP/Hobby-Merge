@@ -3,7 +3,7 @@ import { Post } from "../../models/post.model";
 
 export const createPost: RequestHandler = async (req, res) => {
   try {
-    const { user, content, postImages, viewCount , reaction, comments } =
+    const { user, content, postImages, viewCount, reaction, comments } =
       req.body;
     const newPost = await Post.create({
       user,
@@ -14,7 +14,7 @@ export const createPost: RequestHandler = async (req, res) => {
       comments,
     });
     res.status(201).json({
-      messages: "Post created successfully",
+      messages: "Амжилттай",
       post: newPost,
     });
   } catch (error) {
