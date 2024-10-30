@@ -97,13 +97,13 @@ export const PostCard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center ">
       <div className="h-fit flex justify-center">
         <div>
           {posts.map((post) => (
             <div
               key={post.id}
-              className="h-fit py-4 px-5 flex flex-col gap-10 container rounded-2xl border mt-5 bg-[#D8EBF5]"
+              className="h-fit py-4 px-5 flex flex-col gap-10 container rounded-2xl border mt-5 bg-[#D8EBF5] w-screen"
             >
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
@@ -151,18 +151,18 @@ export const PostCard: React.FC = () => {
                 </div>
 
                 {post.images.length > 0 && (
-                  <div className="flex w-[771px] p-[30px] ">
+                  <div className=" w-[full] p-10 ">
                     {post.images.map((image, index) => (
                       <div
                         key={index}
-                        className={`relative h-[250px] w-full rounded-lg`}
+                        className={`relative h-[250px] w-full p- rounded-lg`}
                       >
                         {image && (
                           <Image
                             src={image}
                             fill
                             alt="post image"
-                            className="rounded-lg object-fill"
+                            className="rounded-lg object-cover "
                           />
                         )}
                       </div>
@@ -215,13 +215,13 @@ export const PostCard: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* <div className="bg-blue-400 p-5 border rounded-xl mt-10">
+      <div className="w-screen border container px-12 py-9 bg-[#D8EBF5] rounded-2xl flex items-center ">
         <form onSubmit={handleCreatePost} className="mb-2">
           <input
             value={newPostContent}
             onChange={(e) => setNewPostContent(e.target.value)}
             placeholder="Write here?"
-            className="w-full p-2 border border-gray-300 rounded mb-2"
+            className="px-7 py-12 bg-white relative w-full pl-28 rounded-xl placeholder:text-lg text-lg text-black"
           />
           <input
             type="file"
@@ -237,7 +237,7 @@ export const PostCard: React.FC = () => {
             <BsSendArrowUpFill size={22} />
           </button>
         </form>
-      </div> */}
+      </div>
     </div>
   );
 };
