@@ -5,7 +5,6 @@ import "./globals.css";
 import { UserContextProvider } from "@/components/utils/AuthProvider";
 import { useEffect, useState } from "react";
 import { HobbyProvider } from "@/components/utils/HobbyProvider";
-import { PostHeader } from "@/components/main/assets/PostHeader";
 
 export default function RootLayout({
   children,

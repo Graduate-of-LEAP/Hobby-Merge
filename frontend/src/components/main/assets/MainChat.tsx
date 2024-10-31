@@ -80,7 +80,7 @@ export const MainChat = () => {
                     </div>
                 </div>
             </div>
-            <div ref={chatRef} className='border-2 border-[#D8EBF5] h-72 overflow-y-scroll'>
+            <div ref={chatRef} className='border-2 border-[#D8EBF5] h-72 overflow-y-scroll p-2'>
                 {messages.length === 0 ? <div className='flex flex-col items-center justify-center h-full'><Avatar >
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                     <AvatarFallback>CN</AvatarFallback>
@@ -92,7 +92,7 @@ export const MainChat = () => {
                     </div>
                 ))}
             </div>
-            <form onSubmit={(e) => { e.preventDefault(); createMessage(); }} className='flex items-center gap-2 p-2 bg-[#D8EBF5]'>
+            <form onSubmit={(e) => { e.preventDefault(); createMessage(); }} className='flex items-center gap-2 p-2 m-0 bg-[#D8EBF5]'>
                 <DropdownMenu >
                     <DropdownMenuTrigger className='border-none rounded-none'>
                         <BsEmojiSmile className='text-2xl cursor-pointer' />

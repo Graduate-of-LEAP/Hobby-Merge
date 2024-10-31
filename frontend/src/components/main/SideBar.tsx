@@ -8,7 +8,7 @@ import { FaList } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const paths = [
     {
@@ -18,17 +18,17 @@ const paths = [
     },
     {
         name: "Settings",
-        path: "/",
+        path: "/settings",
         icon: <IoSettingsOutline />
     },
     {
         name: "Wait List",
-        path: "/",
+        path: "/waitlist",
         icon: <FaList />
     },
     {
         name: "Profile",
-        path: "/",
+        path: "/profile",
         icon: <FaRegHeart />
     }
 ];
@@ -45,14 +45,15 @@ const user = [
 export const SideBar = () => {
     const [searchValue, setSearchValue] = useState('');
     const pathname = usePathname();
+    const router = useRouter();
 
     const handleClearSearch = () => {
         setSearchValue('');
     };
 
     return (
-        <div className='w-[260px] flex flex-col justify-between'>
-            <div className='w-[260px] text-xl flex flex-col items-center py-4 bg-[#d8ebf5] rounded-xl'>
+        <div className='min-w-[260px] flex flex-col justify-between'>
+            <div className=' text-xl flex flex-col items-center py-4 bg-[#d8ebf5] rounded-br-xl'>
                 <Image src={"./logo.svg"} alt="d" width={115} height={91} />
                 <div className='w-[128px] h-[128px] border border-black rounded-full relative'>
                     <Image className='rounded-full' src="/profile.jpg" alt="pro" objectFit='cover' layout='fill' />
@@ -67,14 +68,15 @@ export const SideBar = () => {
                     return (
                         <button
                             key={index}
-                            className={`w-[204px] ${pathname === item.path ? "bg-white" : "bg-[#d8ebf5]"} h-[38px] border rounded-2xl hover:bg-[#d8ebf5] flex items-center justify-center gap-3 font-bold`}>
+                            onClick={() => router.push(item.path)}
+                            className={`w-[204px] ${pathname === item.path ? "bg-[#d8ebf5]" : "bg-white"} h-[38px] border rounded-2xl hover:bg-[#d8ebf5] flex items-center justify-center gap-3 font-bold`}>
                             {item.icon} {item.name}
                         </button>
                     )
                 })}
             </div>
-            <div className='w-full h-[320px] border bg-[#d8ecf7] flex flex-col gap-3 p-4 rounded-xl font-bold'>
-                Active status
+            <div className='w-full max-h-[320px] border bg-[#d8ecf7] flex flex-col gap-3 p-4 rounded-tr-xl'>
+                <h1 className='font-bold text-xl'>Users</h1>
                 <div className='w-full space-y-1 overflow-y-scroll flex flex-col gap-2'>
                     {user.map((item, index) => {
                         return (
@@ -84,7 +86,7 @@ export const SideBar = () => {
                                 </div>
                                 <Image className='rounded-full absolute bottom-0 ml-8' src={item.avatarImg} alt="h" width={20} height={20} />
                                 <div className='flex justify-center items-center'>
-                                    <h1>{item.name}</h1>
+                                    <p>{item.name}</p>
                                 </div>
                             </div>
                         )
@@ -92,7 +94,7 @@ export const SideBar = () => {
                 </div>
                 <div className='text-sm flex items-center'>
                     <input
-                        className='w-[204px] h-[40px] border bg-white rounded-xl p-3 font-sans'
+                        className='border w-full bg-white rounded-xl p-3 font-sans'
                         placeholder='search'
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
