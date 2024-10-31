@@ -211,7 +211,7 @@ export const PostCard: React.FC = () => {
           ))}
         </div>
       </div>
-      <div div className="w-screen border container px-12 py-9 bg-[#D8EBF5] rounded-2xl flex flex-col">
+      <div className="w-screen border container px-12 py-9 bg-[#D8EBF5] rounded-2xl flex flex-col">
   <form onSubmit={handleCreatePost} className="mb-2 flex flex-col w-full">
     <div className="flex items-start">
       <div className="relative w-14 h-14 mr-4">
@@ -240,7 +240,7 @@ export const PostCard: React.FC = () => {
           />
         </div>
       ))}
-      <input
+      {/* <input
         type="file"
         multiple
         onChange={(e) => {
@@ -254,7 +254,7 @@ export const PostCard: React.FC = () => {
       />
       <button type="submit" className="ml-2 bg-blue-500 text-white rounded px-4">
         <PiArrowFatLinesRightBold className="w-8 h-8" />
-      </button>
+      </button> */}
     </div>
   </form>
   </div>

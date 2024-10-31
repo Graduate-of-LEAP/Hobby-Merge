@@ -23,6 +23,7 @@ type User = {
   reaction: Reaction[];
   lastLogin: Date;
   isVerified: boolean;
+  profilePicture?: string;
 };
 
 export type Category = {
@@ -88,6 +89,7 @@ export interface UserContextType {
   getUser: () => void;
   register: (newUser: NewUser) => void;
   login: (email: string, password: string) => void;
+  updateProfilePicture: (file: File) => Promise<void>; 
 }
 
 export const UserContext = createContext<UserContextType>(
@@ -104,6 +106,28 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const [user, setUser] = useState<User | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const updateProfilePicture = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("profilePicture", file);
+
+      const token = localStorage.getItem("token");
+      const response = await api.post("/user/profile-picture", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const updatedUser = response.data.user; // Assuming the response contains the updated user data
+      setUser(updatedUser); // Update the user in context
+      toast.success("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
+      toast.error("Failed to update profile picture.");
+    }
+  };
+  
 
   const register = async (newUser: NewUser) => {
     try {
@@ -174,7 +198,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       localStorage.removeItem("token");
       setUser(undefined);
       toast.success("You have been logged out successfully.");
-      router.replace("/login");
+      router.push("/login");
     } catch (error) {
       console.error("Logout error", error);
       toast.error("Log out failed.");
@@ -218,7 +242,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
   return (
     <UserContext.Provider
-      value={{ user, getUser, setUser, LogOut, register, login }}
+      value={{ user, getUser, setUser, LogOut, register, login, updateProfilePicture,}}
     >
       {children}
     </UserContext.Provider>
