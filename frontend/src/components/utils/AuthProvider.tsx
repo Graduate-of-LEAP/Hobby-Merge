@@ -174,6 +174,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       localStorage.removeItem("token");
       setUser(undefined);
       toast.success("You have been logged out successfully.");
+      router.replace("/login");
     } catch (error) {
       console.error("Logout error", error);
       toast.error("Log out failed.");
