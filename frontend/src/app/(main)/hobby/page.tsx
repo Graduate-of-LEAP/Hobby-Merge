@@ -45,7 +45,11 @@ const Hobby = () => {
   const addUserToHobby = async (hobbyId: string, userId: string) => {
     try {
       const response = await api.post(
+<<<<<<< HEAD
         "http://localhost:3030/hobby/addUser",
+=======
+        "/hobby/addUser",
+>>>>>>> 3cef845ba4718e58416aec8a5bcbc878c657c391
         { hobbyId, userId },
         {
           headers: {
@@ -67,6 +71,7 @@ const Hobby = () => {
     if (user) {
       console.log("User ID:", user._id);
       try {
+<<<<<<< HEAD
         await Promise.all(
           selectedHobbies.map((hobbyId) => addUserToHobby(hobbyId, user._id))
         );
@@ -88,6 +93,15 @@ const Hobby = () => {
         getUser();
         toast.success("Таны hobby амжилттай хадгаллаа");
 
+=======
+        const promises = selectedHobbies.map((hobbyId) =>
+          addUserToHobby(hobbyId, user._id)
+        );
+        await Promise.all(promises);
+        getUser();
+        toast.success("Таны hobby амжилттай хадгаллаа");
+        setSelectedHobbies([]);
+>>>>>>> 3cef845ba4718e58416aec8a5bcbc878c657c391
         router.push("/");
       } catch (error) {
         console.error("Error saving selected hobbies:", error);
