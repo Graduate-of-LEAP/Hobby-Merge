@@ -102,12 +102,15 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const register = async (newUser: NewUser) => {
     try {
-      const response = await api.post("/auth/register", newUser);
+      const response = await api.post(
+        "http://localhost:3030/auth/register",
+        newUser
+      );
       console.log("Registration response:", response.data);
 
       const { token, user: registeredUser } = response.data;
@@ -133,7 +136,10 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await api.post("/auth/login", { email, password });
+      const response = await api.post("http://localhost:3030/auth/login", {
+        email,
+        password,
+      });
       const { token, user: loggedInUser } = response.data;
 
       // Update user state and set token in local storage
@@ -163,7 +169,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       }
 
       console.log("Fetching user with token:", token);
-      const response = await api.get("/user", {
+      const response = await api.get("http://localhost:3030/user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -3,7 +3,7 @@ import {
   createHobbyMessage,
   deleteHobbyMessage,
   getAllHobbyMessage,
-} from "../controllers/hobbymessage";
+} from "../controllers/hobby/hobbymessage";
 
 const hobbyMessageRouter = Router();
 

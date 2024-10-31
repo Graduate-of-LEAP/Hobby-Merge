@@ -21,7 +21,7 @@ const Hobby = () => {
 
   const getHobbies = async () => {
     try {
-      const response = await api.get(`/hobby`, {
+      const response = await api.get(`http://localhost:3030/hobby`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -45,7 +45,7 @@ const Hobby = () => {
   const addUserToHobby = async (hobbyId: string, userId: string) => {
     try {
       const response = await api.post(
-        "/hobby/addUser",
+        "http://localhost:3030/hobby/addUser",
         { hobbyId, userId },
         {
           headers: {
@@ -67,13 +67,27 @@ const Hobby = () => {
     if (user) {
       console.log("User ID:", user._id);
       try {
-        const promises = selectedHobbies.map((hobbyId) =>
-          addUserToHobby(hobbyId, user._id)
+        await Promise.all(
+          selectedHobbies.map((hobbyId) => addUserToHobby(hobbyId, user._id))
         );
-        await Promise.all(promises);
+
+        const response = await api.post(
+          "http://localhost:3030/user/hobby",
+          {
+            userId: user._id,
+            hobbyIds: selectedHobbies,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        console.log(response.data);
         getUser();
         toast.success("Таны hobby амжилттай хадгаллаа");
-        setSelectedHobbies([]);
+
         router.push("/");
       } catch (error) {
         console.error("Error saving selected hobbies:", error);

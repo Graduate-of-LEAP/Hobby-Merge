@@ -18,13 +18,7 @@ const hobbySchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    users: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    ],
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
     posts: [
       {
         type: Schema.Types.ObjectId,

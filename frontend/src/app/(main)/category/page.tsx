@@ -19,13 +19,13 @@ const Category = () => {
 
   const getCategories = async () => {
     try {
-      const response = await api.get(`/category`, {
+      const response = await api.get(`http://localhost:3030/category`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       setCategories(response.data.categories);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const toggleCategorySelection = (categoryId: string) => {
@@ -41,7 +41,7 @@ const Category = () => {
       console.log("User ID:", user._id);
       try {
         const response = await api.post(
-          "/user/category",
+          "http://localhost:3030/user/category",
           {
             userId: user._id,
             categoryIds: selectedCategories,
@@ -87,10 +87,11 @@ const Category = () => {
               key={index}
               role="button"
               onClick={() => toggleCategorySelection(category._id)}
-              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${selectedCategories.includes(category._id)
-                ? "border-[#06B6D4]"
-                : "border-[#dddddd] text-[#6f7079]"
-                }`}
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
+                selectedCategories.includes(category._id)
+                  ? "border-[#06B6D4]"
+                  : "border-[#dddddd] text-[#6f7079]"
+              }`}
             >
               {category?.name}
             </div>

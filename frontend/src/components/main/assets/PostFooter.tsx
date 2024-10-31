@@ -37,7 +37,7 @@ export const PostFooter = () => {
     formData.append("image", selectedImage);
 
     try {
-      const res = await api.post("/upload", formData, {
+      const res = await api.post("http://localhost:3030/upload", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
@@ -55,7 +55,7 @@ export const PostFooter = () => {
   const createPost = async () => {
     try {
       await api.post(
-        "/post",
+        "http://localhost:3030/post",
         { user: user?._id, content, postImages: imageUrl },
         {
           headers: {
