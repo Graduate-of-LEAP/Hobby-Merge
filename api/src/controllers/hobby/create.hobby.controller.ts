@@ -3,13 +3,14 @@ import { Hobby } from "../../models/hobby.model";
 
 export const createHobby: RequestHandler = async (req, res) => {
   try {
-    const { name, description, cover_image, categoryId } = req.body;
+    const { name, description, cover_image, categoryId, userId } = req.body;
 
     const newHobby = await Hobby.create({
       name,
       description,
       cover_image,
       category: categoryId,
+      users: [userId],
     });
 
     res.status(201).json({

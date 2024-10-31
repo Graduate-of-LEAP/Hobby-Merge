@@ -56,6 +56,7 @@ type Post = {
   viewCount: number;
   reaction: Reaction;
   comments: Comment;
+  // hobby: Hobby;
 };
 
 type HobbyMessage = {

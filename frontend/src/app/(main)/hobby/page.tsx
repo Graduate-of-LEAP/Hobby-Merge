@@ -2,7 +2,7 @@
 import {
   UserContextType,
   useUser,
-  Collection,
+  Hobby,
 } from "@/components/utils/AuthProvider";
 import { api } from "@/lib/axios";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const Hobby = () => {
   const { user, getUser } = (useUser() as UserContextType) || {};
 
-  const [hobbies, setHobbies] = useState<Collection[]>([]);
+  const [hobbies, setHobbies] = useState<Hobby[]>([]);
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
 
   const getHobbies = async () => {
@@ -87,10 +87,11 @@ const Hobby = () => {
               key={index}
               role="button"
               onClick={() => toggleCategorySelection(hobby._id)}
-              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${selectedHobbies.includes(hobby._id)
+              className={`border px-2 py-1 rounded-full flex items-center justify-center cursor-pointer ${
+                selectedHobbies.includes(hobby._id)
                   ? "border-[#06B6D4]"
                   : "border-[#dddddd] text-[#6f7079]"
-                }`}
+              }`}
             >
               {hobby?.name}
             </div>
