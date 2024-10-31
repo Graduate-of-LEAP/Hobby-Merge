@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import anime from "animejs";
+import Link from "next/link";
 
 const Page = () => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const Page = () => {
     anime({
       targets: ".staggering-direction-demo .el",
       translateY: [600, 0],
-      delay: anime.stagger(100, { direction: "reverse" }),
+      delay: anime.stagger(1000, { direction: "reverse" }),
     });
   }, []);
 
@@ -57,22 +58,24 @@ const Page = () => {
           <li>How it Works</li>
           <li>Contact Us</li>
         </ul>
-        <button className="flex gap-2 items-center bg-[#57B569] px-4 text-white py-2 rounded-xl">
-          <BiCategoryAlt />
-          Get Started
-        </button>
+        <Link href={`/login`}>
+          <button className="flex gap-2 items-center bg-[#57B569] px-4 text-white py-2 rounded-xl">
+            <BiCategoryAlt />
+            Get Started
+          </button>
+        </Link>
       </nav>
       <div className="flex py-24">
         <div className="flex-1 staggering-direction-demo overflow-hidden h-fit">
-          <p className="text-[48px] font-semibold px-4 el duration-500 ">
+          <p className="text-[48px] font-semibold px-4 el  ">
             Hobby Merge бол хүмүүсийн сонирхлыг нэгтгэж, тэдэнд илүү их боломж
             олгох зорилготой,
           </p>
-          <p className="px-4 el duration-500 ">
+          <p className="px-4 el  ">
             олон төрлийн хобби болон сонирхлоороо хуваалцах, хамтдаа шинэ зүйлс
             суралцах боломжийг олгодог платформ юм.
           </p>
-          <button className="flex gap-2 items-center bg-[#57B569] px-4 text-white py-2 rounded-xl mx-4 my-12 el duration-500  ">
+          <button className="flex gap-2 items-center bg-[#57B569] px-4 text-white py-2 rounded-xl mx-4 my-12 el   ">
             Our Solution
           </button>
         </div>
