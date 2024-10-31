@@ -41,7 +41,7 @@ io.use(socketAuthMiddleware);
 
 app.use("/auth", authRouter);
 app.use("/hobby", hobbyRouter);
-app.use("hobbyMessage", hobbyMessageRouter);
+app.use("/hobby/message", hobbyMessageRouter);
 app.use("/user", userRouter);
 app.use("/user/message", userMessageRouter);
 app.use("/category", categoryRouter);

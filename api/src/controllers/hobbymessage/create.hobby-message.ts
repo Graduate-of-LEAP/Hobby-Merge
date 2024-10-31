@@ -1,14 +1,18 @@
-import { RequestHandler } from "express";
+import { Request, Response } from "express";
 import { HobbyMessage } from "../../models/hobbyMessage.model";
 
-export const createHobbyMessage: RequestHandler = async (req, res) => {
+interface CustomRequest extends Request {
+  userID?: string;
+}
+
+export const createHobbyMessage = async (req: CustomRequest, res: Response) => {
   try {
-    const { message, hobby, user, posts } = req.body;
+    const { message, hobby, posts } = req.body;
 
     const newHobbyMessage = await HobbyMessage.create({
       message,
       hobby,
-      user,
+      user: req.userID,
       posts,
     });
     res.status(201).json({

@@ -8,7 +8,7 @@ import {
 const hobbyMessageRouter = Router();
 
 hobbyMessageRouter.post("/", createHobbyMessage);
-hobbyMessageRouter.get("/", getAllHobbyMessage);
+hobbyMessageRouter.get("/hobby/:id", getAllHobbyMessage);
 hobbyMessageRouter.delete("/:id", deleteHobbyMessage);
 
 export { hobbyMessageRouter };
