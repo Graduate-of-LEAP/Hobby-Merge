@@ -1,9 +1,11 @@
 import { RequestHandler } from "express";
 import { Hobby } from "../../models/hobby.model";
 
-export const getAllHobby: RequestHandler = async (req, res) => {
+//get id by hobby controller
+export const getIdHobby: RequestHandler = async (req, res) => {
+  const { id } = req.params;
   try {
-    const Hobbies = await Hobby.find({}).populate("users");
+    const Hobbies = await Hobby.findById(id).populate("users");
     res.status(200).json(Hobbies);
   } catch (error) {
     console.error(error);
