@@ -1,6 +1,5 @@
 import { RequestHandler, Request, Response } from "express";
 import { UserMessage } from "../../models/userMessage.model";
-import { User } from "../../models/user.model";
 
 interface CustomRequest extends Request {
   userID?: string;
@@ -16,9 +15,12 @@ export const getAllUserMessage: RequestHandler = async (_req, res) => {
 };
 export const getUserMessageUserID: RequestHandler = async (req, res) => {
   try {
-    const { user } = req.params;
+    const { from, to } = req.params;
     const message = await UserMessage.find({
-      $or: [{ from: user }, { to: user }],
+      $or: [
+        { from, to },
+        { from: to, to: from },
+      ],
     });
     res.status(200).json(message);
   } catch (error) {
@@ -67,6 +69,14 @@ export const updateUserMessageID: RequestHandler = async (req, res) => {
 export const deleteUserMessageID: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
+    const deletedMessage = await UserMessage.findByIdAndDelete(id);
+
+    if (!deletedMessage) {
+      res.status(404).json({ message: "Message not found" });
+      return;
+    }
+
+    res.status(200).json({ message: "Message deleted successfully" });
   } catch (error) {
     console.error("Get user message error:", error);
     res.status(500).json({
