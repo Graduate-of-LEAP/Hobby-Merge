@@ -14,7 +14,7 @@ const userMessageRouter = Router();
 userMessageRouter
   .get("/", getAllUserMessage)
   .get("/id/:id", getUserMessageID)
-  .get("/user/:user", getUserMessageUserID)
+  .get("/user/:from/:to", getUserMessageUserID)
   .post("/", createUserMessage)
   .put("/:id", updateUserMessageID)
   .delete("/id/:id", deleteUserMessageID)
