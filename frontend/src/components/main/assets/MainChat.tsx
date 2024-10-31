@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input'
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { BsEmojiSmile } from "react-icons/bs";
 import { GrAttachment } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
@@ -17,6 +17,7 @@ export const MainChat = () => {
     const [typing, setTyping] = useState<boolean>()
     const [message, setMessage] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const chatRef = useRef<HTMLDivElement>(null);
     const { user } = useUser();
     const { socket, reciver, messages, setMessages } = useHobby();
     const createMessage = async () => {
@@ -51,6 +52,11 @@ export const MainChat = () => {
             console.error(err);
         }
     };
+    useEffect(() => {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [messages]);
     const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.currentTarget.files;
         console.log(files)
@@ -74,7 +80,7 @@ export const MainChat = () => {
                     </div>
                 </div>
             </div>
-            <div className='border-2 border-[#D8EBF5] h-72 overflow-y-scroll'>
+            <div ref={chatRef} className='border-2 border-[#D8EBF5] h-72 overflow-y-scroll'>
                 {messages.length === 0 ? <div className='flex flex-col items-center justify-center h-full'><Avatar >
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                     <AvatarFallback>CN</AvatarFallback>
