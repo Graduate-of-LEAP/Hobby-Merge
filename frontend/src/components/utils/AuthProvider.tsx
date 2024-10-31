@@ -190,8 +190,14 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         return;
       }
 
-      await getUser();
-      setLoading(false);
+      try {
+        await getUser();
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        router.replace("/login");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUser();
@@ -199,16 +205,12 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
   useEffect(() => {
     if (!loading) {
-      if (!user) {
-        router.replace("/login");
-      } else if (user?.role === "ADMIN") {
-        router.push("/admin");
-      } else if (user?.category?.length === 0) {
-        router.push("/category");
-      } else if (user?.hobby?.length === 0) {
-        router.push("/hobby");
-      } else {
-        router.push("/");
+      if (user) {
+        if (user.role === "ADMIN") {
+          router.push("/admin");
+        } else if (user.category.length === 0) {
+          router.push("/category");
+        }
       }
     }
   }, [user, loading, router]);
