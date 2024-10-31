@@ -3,10 +3,9 @@ import { PostHeader } from "@/components/main/assets/PostHeader";
 
 export default function Home() {
   return (
-    <div>
-      {/* <HomePage /> */}
-      {/* <PostHeader />
-      <PostFooter /> */}
+    <div className="flex flex-col justify-between w-full">
+      <PostHeader />
+      <PostFooter />
     </div>
   );
 }

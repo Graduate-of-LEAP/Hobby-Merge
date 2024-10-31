@@ -4,12 +4,10 @@ import { Suggest } from "./assets/Suggest";
 
 export const Chat = () => {
   return (
-    <div className="w-80">
+    <div className="min-w-80 flex flex-col justify-between">
       <div>Search</div>
-      <div className="flex flex-col justify-between h-full">
-        <Suggest />
-        <MainChat />
-      </div>
+      <Suggest />
+      <MainChat />
     </div>
   );
 };
