@@ -102,7 +102,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const router = useRouter();
 
   const register = async (newUser: NewUser) => {
@@ -116,7 +116,9 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       }
 
       setUser({ ...registeredUser });
+
       toast.success("Бүртгэл амжилттай!");
+      router.push("/category");
       localStorage.setItem("token", token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -133,11 +135,19 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
     try {
       const response = await api.post("/auth/login", { email, password });
       const { token, user: loggedInUser } = response.data;
-      console.log(response.data);
 
+      // Update user state and set token in local storage
       setUser({ ...loggedInUser, isAuthenticated: true });
-      toast.success("Нэвтрэлт амжилттай!");
       localStorage.setItem("token", token);
+
+      // Use loggedInUser.role instead of user?.role to avoid async issue
+      if (loggedInUser.role === "ADMIN") {
+        router.push("/admin");
+      } else if (loggedInUser.role === "USER") {
+        router.push("/");
+      }
+
+      toast.success("Нэвтрэлт амжилттай!");
     } catch (error) {
       toast.error("Нууц үг эсвэл майл буруу байна!");
       console.error("Нэвтрэх алдаа:", error);
@@ -185,7 +195,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       const token = localStorage.getItem("token");
 
       if (!token) {
-        router.replace("/login");
+        router.replace("/landing"); // Redirect to landing page if no token
         setLoading(false);
         return;
       }
@@ -202,18 +212,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 
     fetchUser();
   }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      if (user) {
-        if (user.role === "ADMIN") {
-          router.push("/admin");
-        } else if (user?.category?.length === 0) {
-          router.push("/category");
-        }
-      }
-    }
-  }, [user, loading, router]);
 
   return (
     <UserContext.Provider
