@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MdDeleteForever } from "react-icons/md";
 import { SiGnuprivacyguard } from "react-icons/si";
+import { PiArrowFatLinesRightBold } from "react-icons/pi";
 
-// Define Post type
 interface Post {
   comment: string[];
   like: string;
@@ -90,14 +90,12 @@ export const PostCard: React.FC = () => {
       }
       return post;
     });
-
     setPosts(updatedPosts);
     setCommentInput((prev) => ({ ...prev, [postId]: "" }));
     setActiveCommentPost(null);
   };
-
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center">
       <div className="h-fit flex justify-center">
         <div>
           {posts.map((post) => (
@@ -144,12 +142,10 @@ export const PostCard: React.FC = () => {
                   </DropdownMenu>
                 </div>
               </div>
-
               <div className="flex flex-col rounded">
                 <div className="h-fit px-3 text-[#1b2468]">
                   <p>{post.content}</p>
                 </div>
-
                 {post.images.length > 0 && (
                   <div className=" w-[full] p-10 ">
                     {post.images.map((image, index) => (
@@ -215,27 +211,54 @@ export const PostCard: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="w-screen border container px-12 py-9 bg-[#D8EBF5] rounded-2xl flex items-center ">
-        <form onSubmit={handleCreatePost} className="mb-2">
-          <input
-            value={newPostContent}
-            onChange={(e) => setNewPostContent(e.target.value)}
-            placeholder="Write here?"
-            className="px-7 py-12 bg-white relative w-full pl-28 rounded-xl placeholder:text-lg text-lg text-black"
-          />
-          <input
-            type="file"
-            multiple
-            onChange={(e) => {
-              const files = Array.from(e.target.files || []);
-              const imageUrls = files.map((file) => URL.createObjectURL(file));
-              setNewPostImages(imageUrls);
-            }}
-            className="mb-2"
-          />
-          <button type="submit">
-            <BsSendArrowUpFill size={22} />
-          </button>
+      <div className="w-screen border container px-12 py-9 bg-[#D8EBF5] rounded-2xl flex flex-col">
+        <form onSubmit={handleCreatePost} className="mb-2 flex flex-col w-full">
+          <div className="flex items-start">
+            <div className="relative w-14 h-14 mr-4">
+              <Image
+                src={"/1.jpg"}
+                fill
+                alt="client image"
+                className="rounded-full"
+              />
+            </div>
+            <textarea
+              value={newPostContent}
+              onChange={(e) => setNewPostContent(e.target.value)}
+              placeholder="Write here?"
+              className="flex-1 px-4 py-2 rounded-xl placeholder:text-lg text-lg text-black min-h-[100px] max-h-[100px] resize-none"
+            />
+          </div>
+          <div className="flex mt-2">
+            {newPostImages.map((image, index) => (
+              <div key={index} className="relative h-20 w-20 mr-2">
+                <Image
+                  src={image}
+                  fill
+                  alt={`Preview ${index + 1}`}
+                  className="rounded-lg object-cover"
+                />
+              </div>
+            ))}
+            <input
+              type="file"
+              multiple
+              onChange={(e) => {
+                const files = Array.from(e.target.files || []);
+                const imageUrls = files.map((file) =>
+                  URL.createObjectURL(file)
+                );
+                setNewPostImages((prevImages) => [...prevImages, ...imageUrls]);
+              }}
+              className="ml-2"
+            />
+            <button
+              type="submit"
+              className="ml-2 bg-blue-500 text-white rounded px-4"
+            >
+              <PiArrowFatLinesRightBold className="w-8 h-8" />
+            </button>
+          </div>
         </form>
       </div>
     </div>
