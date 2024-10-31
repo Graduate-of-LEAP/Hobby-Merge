@@ -15,10 +15,12 @@ import { useUser } from "./AuthProvider";
 import { api } from "@/lib/axios";
 
 interface HobbyContextType {
-  reciver: string;
+  reciver: string | undefined;
   messages: Message[];
   whoTyping: string | null;
-  setReciver: Dispatch<SetStateAction<string>>;
+  hobby: Hobby;
+  setMyHobby: Dispatch<SetStateAction<string>>;
+  setReciver: Dispatch<SetStateAction<string | undefined>>;
   setMessages: Dispatch<SetStateAction<Message[]>>;
   socket: React.MutableRefObject<Socket | null>;
 } // useEffect(() => {
@@ -41,14 +43,33 @@ interface TypingInfo {
   from: string;
   to: string;
 }
+export type Hobby = {
+  _id: string;
+  name: string;
+  description: string;
+  cover_image: string;
+  category: string;
+  users: User[];
+  posts: string[];
+  messages: string[];
+};
+export type User = {
+  _id: string;
+  name: string;
+  email: string;
+  cover_image: string;
+}
+
 const HobbyContext = createContext<HobbyContextType>({} as HobbyContextType);
 
 export const HobbyProvider = ({ children }: PropsWithChildren) => {
-  const [reciver, setReciver] = useState<string>("67185659f242c92212f3159d");
+  const { user } = useUser();
+  const [reciver, setReciver] = useState<string | undefined>(undefined);
+  const [myHobby, setMyHobby] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [whoTyping, setWhoTyping] = useState<string | null>(null);
+  const [hobby, setHobby] = useState<Hobby>({} as Hobby)
   const socket = useRef<Socket | null>(null);
-  const { user } = useUser();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -93,13 +114,57 @@ export const HobbyProvider = ({ children }: PropsWithChildren) => {
         console.error(err);
       }
     };
+    const getHobbyMessagesHobbyID = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.warn("No token found");
+          return;
+        }
+        const res = await api.get(`/hobby/message/hobby/${myHobby}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMessages(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     if (reciver) {
       getUserMessagesUserID();
+    } else {
+      getHobbyMessagesHobbyID();
     }
-  }, [reciver, user]);
+  }, [reciver, user, myHobby]);
+  useEffect(() => {
+    const getHobbyForUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.warn("No token found");
+          return;
+        }
+        const res = await api.get(`/hobby/${myHobby}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setHobby(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getHobbyForUser();
+  }, [myHobby]);
+  useEffect(() => {
+    if (user.hobby) {
+      setMyHobby(user.hobby[0]);
+    }
+  }, [user.hobby])
   return (
     <HobbyContext.Provider
-      value={{ reciver, messages, whoTyping, setReciver, setMessages, socket }}
+      value={{ reciver, hobby, messages, whoTyping, setMyHobby, setReciver, setMessages, socket }}
     >
       {children}
     </HobbyContext.Provider>

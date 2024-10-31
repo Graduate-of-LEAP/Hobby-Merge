@@ -9,6 +9,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useHobby } from '../utils/HobbyProvider';
+import { useUser } from '../utils/AuthProvider';
 
 const paths = [
     {
@@ -33,17 +35,10 @@ const paths = [
     }
 ];
 
-const user = [
-    { image: "/2.jpg", avatarImg: "/active.svg", name: "Hongoroo" },
-    { image: "/1.jpg", avatarImg: "/active.svg", name: "Turuu" },
-    { image: "/car.jpg", avatarImg: "/active.svg", name: "Baynaa" },
-    { image: "/2.jpg", avatarImg: "/active.svg", name: "Dulguun" },
-    { image: "/1.jpg", avatarImg: "/active.svg", name: "Gerlee" },
-    { image: "/car.jpg", avatarImg: "/active.svg", name: "Tom Turuu" },
-];
-
 export const SideBar = () => {
     const [searchValue, setSearchValue] = useState('');
+    const { hobby, setReciver } = useHobby()
+    const { user } = useUser();
     const pathname = usePathname();
     const router = useRouter();
 
@@ -56,7 +51,7 @@ export const SideBar = () => {
             <div className=' text-xl flex flex-col items-center py-4 bg-[#d8ebf5] rounded-br-xl'>
                 <Image src={"./logo.svg"} alt="d" width={115} height={91} />
                 <div className='w-[128px] h-[128px] border border-black rounded-full relative'>
-                    <Image className='rounded-full' src="/profile.jpg" alt="pro" objectFit='cover' layout='fill' />
+                    <Image className='rounded-full' src={user.cover_image || "/2.jpg"} alt="pro" objectFit='cover' layout='fill' />
                 </div>
                 <div className='flex flex-col justify-center'>
                     <h1 className='font-bold'>Dulguun</h1>
@@ -78,13 +73,13 @@ export const SideBar = () => {
             <div className='w-full max-h-[320px] border bg-[#d8ecf7] flex flex-col gap-3 p-4 rounded-tr-xl'>
                 <h1 className='font-bold text-xl'>Users</h1>
                 <div className='w-full space-y-1 overflow-y-scroll flex flex-col gap-2'>
-                    {user.map((item, index) => {
+                    {hobby.users?.map((item, index) => {
                         return (
-                            <div key={index} className='w-[162px] h-[68px] rounded-xl flex gap-3 relative'>
+                            <div onClick={() => setReciver(item._id)} key={index} className='w-[162px] h-[68px] rounded-xl flex gap-3 relative cursor-pointer'>
                                 <div className='w-[56px] h-[56px] relative'>
-                                    <Image className="rounded-full" src={item.image} alt="h" objectFit='cover' layout='fill' />
+                                    <Image className="rounded-full" src={item.cover_image || "/2.jpg"} alt="h" objectFit='cover' layout='fill' />
                                 </div>
-                                <Image className='rounded-full absolute bottom-0 ml-8' src={item.avatarImg} alt="h" width={20} height={20} />
+                                {/* <Image className='rounded-full absolute bottom-0 ml-8' src="/active.svg" alt="h" width={20} height={20} /> */}
                                 <div className='flex justify-center items-center'>
                                     <p>{item.name}</p>
                                 </div>

@@ -18,8 +18,9 @@ type User = {
   name: string;
   email: string;
   role: string;
+  cover_image: string;
   category: Category[];
-  hobby: Hobby[];
+  hobby: string[];
   reaction: Reaction[];
   lastLogin: Date;
   isVerified: boolean;
@@ -82,8 +83,8 @@ type NewUser = {
 };
 
 export interface UserContextType {
-  user: User | undefined;
-  setUser: (user: User | undefined) => void;
+  user: User;
+  setUser: (user: User) => void;
   LogOut: () => void;
   getUser: () => void;
   register: (newUser: NewUser) => void;
@@ -101,10 +102,9 @@ interface UserContextProviderProps {
 export const UserContextProvider: FC<UserContextProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User>({} as User);
   const [, setLoading] = useState(true);
   const router = useRouter();
-
   const register = async (newUser: NewUser) => {
     try {
       const response = await api.post("/auth/register", newUser);
@@ -182,7 +182,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const LogOut = async () => {
     try {
       localStorage.removeItem("token");
-      setUser(undefined);
+      setUser({} as User);
       toast.success("You have been logged out successfully.");
     } catch (error) {
       console.error("Logout error", error);
