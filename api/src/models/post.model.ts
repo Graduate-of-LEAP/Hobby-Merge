@@ -29,6 +29,7 @@ const postSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
      
     },
+    
   },
 
   { timestamps: true }
