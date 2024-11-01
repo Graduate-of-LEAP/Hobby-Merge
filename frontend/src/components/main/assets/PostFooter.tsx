@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 export const PostFooter = () => {
   const { user } = useUser() as UserContextType;
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
+  const [, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [content, setContent] = useState<string>("");

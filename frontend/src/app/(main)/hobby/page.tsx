@@ -2,7 +2,7 @@
 import {
   UserContextType,
   useUser,
-  Hobby,
+  Hobby as HobbyType,
 } from "@/components/utils/AuthProvider";
 import { api } from "@/lib/axios";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const Hobby = () => {
   const { user, getUser } = (useUser() as UserContextType) || {};
 
-  const [hobbies, setHobbies] = useState<Hobby[]>([]);
+  const [hobbies, setHobbies] = useState<HobbyType[]>([]);
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
 
   const getHobbies = async () => {
